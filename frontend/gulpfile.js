@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const { src, dest, series, parallel } = require('gulp');
 const copy = require('gulp-copy');
 const log = require('fancy-log');
