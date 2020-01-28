@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging;
+using elibrary.data.Context;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace elibrary.api
 {
@@ -33,6 +36,15 @@ namespace elibrary.api
             {
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "e-library API", Version = "v1.0" });
             });
+
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<ELibraryContext>(opts =>
+                {
+                    opts.UseSqlServer(
+                        "connectionstring",
+                        sqlOpts => sqlOpts.MigrationsAssembly(typeof(ELibraryContext).GetTypeInfo().Assembly.GetName().Name)
+                    );
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

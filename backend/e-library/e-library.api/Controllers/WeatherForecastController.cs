@@ -38,6 +38,7 @@ namespace elibrary.api.Controllers
         }
 
         [HttpGet]
+        [Route("{day}")]
         public IActionResult Get([Required] int day)
         {
             if (!ModelState.IsValid)
