@@ -1,4 +1,4 @@
-using e_library.api.Controllers;
+using elibrary.api.Controllers;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,7 +6,7 @@ using Moq;
 using System.Collections.Generic;
 using Xunit;
 
-namespace e_library.api.tests
+namespace elibrary.api.tests
 {
     public class WeatherForecastTests
     {

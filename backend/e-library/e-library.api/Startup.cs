@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging;
 
-namespace e_library.api
+namespace elibrary.api
 {
     public class Startup
     {

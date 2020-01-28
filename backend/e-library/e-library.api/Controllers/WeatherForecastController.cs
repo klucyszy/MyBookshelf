@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace e_library.api.Controllers
+namespace elibrary.api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

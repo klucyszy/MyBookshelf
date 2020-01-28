@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "e_library.api": {
+    "elibrary.api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",

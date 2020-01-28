@@ -1,6 +1,6 @@
 using System;
 
-namespace e_library.api
+namespace elibrary.api
 {
     public class WeatherForecast
     {

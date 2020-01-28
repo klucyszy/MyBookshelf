@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>e_library.api.tests</RootNamespace>
+    <RootNamespace>elibrary.api.tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
