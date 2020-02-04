@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace elibrary.data.Entities
 {
-    public class BookOnLoan
+    public class BookOnLoan : BaseEntity
     {
         public int Id { get; set; }
         public DateTime IssueDate { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace elibrary.data.Entities
 {
-    public class Book
+    public class Book : BaseEntity
     {
         public string ISBN { get; set; }    
         public string Title { get; set; }

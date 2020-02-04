@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using elibrary.data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace elibrary.data.Context
 {
@@ -8,6 +9,11 @@ namespace elibrary.data.Context
         {
 
         }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookOnLoan> BooksOnLoan { get; set; }
+        public DbSet<UserFavoriteBook> UserFavoriteBooks { get; set; }
 
         public ELibraryContext(DbContextOptions<ELibraryContext> opts)
             : base(opts)

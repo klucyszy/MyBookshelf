@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace elibrary.data.Entities
 {
-    public class UserFavoriteBook
+    public class UserFavoriteBook : BaseEntity
     {
         public int Id { get; set; }                       
         [Range(1,10)]
