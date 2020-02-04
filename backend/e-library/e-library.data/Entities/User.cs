@@ -1,13 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace elibrary.data.Entities
 {
     public class User
     {
         public Guid Id { get; set; }
-
-        [Required]
         public string Login { get; set; }
+
+        public ICollection<BookOnLoan> BooksOnLoan { get; set; }
+        public ICollection<UserFavoriteBook> FavoriteBooks { get; set; }
     }
 }

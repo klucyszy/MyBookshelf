@@ -6,22 +6,16 @@ namespace elibrary.data.Entities
     public class BookOnLoan
     {
         public int Id { get; set; }
-        
-        [Required]
-        public Guid UserId { get; set; }
-        
-        [Required]
-        public string BookISBN { get; set; }
-
-        [Required]
         public DateTime IssueDate { get; set; }
+        public DateTime? DueReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
+        public decimal? FineAmount { get; set; }
 
-        public DateTime DueReturnDate { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; set; }
 
-        public DateTime ReturnDate { get; set; }
-
-        public decimal FineAmount { get; set; }
-
+        public string BookISBN { get; set; }
+        public Book Book { get; set; }
 
     }
 }

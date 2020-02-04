@@ -41,7 +41,7 @@ namespace elibrary.api
                 .AddDbContext<ELibraryContext>(opts =>
                 {
                     opts.UseSqlServer(
-                        "connectionstring",
+                        Configuration.GetConnectionString("ELibraryDB"),
                         sqlOpts => sqlOpts.MigrationsAssembly(typeof(ELibraryContext).GetTypeInfo().Assembly.GetName().Name)
                     );
                 });
