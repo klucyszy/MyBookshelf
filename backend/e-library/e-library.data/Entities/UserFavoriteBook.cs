@@ -9,7 +9,7 @@ namespace elibrary.data.Entities
         public int Rate { get; set; }        
         public string Comment { get; set; }
 
-        public string BookISBN { get; set; }
+        public int BookId { get; set; }
         public Book Book { get; set; }
 
         public int UserId { get; set; }

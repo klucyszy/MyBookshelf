@@ -24,6 +24,16 @@ namespace elibrary.data.Repository
             return _dbSet.AsEnumerable();
         }
 
+        public IEnumerable<TEntity> GetAll(int pageNumber = 1, int pageSize = 100)
+        {
+            var skipNumber = (pageNumber - 1) * pageSize;
+            
+            return _dbSet
+                .Skip(skipNumber)
+                .Take(pageSize)
+                .AsEnumerable();
+        }
+
         public TEntity GetFirstOrDefualt(int id)
         {
             return _dbSet.FirstOrDefault(x => x.Id == id);
@@ -40,6 +50,11 @@ namespace elibrary.data.Repository
             }
 
             return default;
+        }
+
+        public int Count()
+        {
+            return _dbSet.Count();
         }
     }
 }

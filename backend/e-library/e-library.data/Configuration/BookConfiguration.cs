@@ -8,8 +8,6 @@ namespace elibrary.data.Configuration
     {
         public void Configure(EntityTypeBuilder<Book> builder)
         {
-            builder.HasKey(x => x.ISBN);
-
             builder.Property(x => x.ISBN)
                 .IsRequired();
             builder.Property(x => x.Author)

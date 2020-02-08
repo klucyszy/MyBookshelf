@@ -22,7 +22,7 @@ namespace elibrary.data.Configuration
             builder
                 .HasOne(e => e.Book)
                 .WithMany(c => c.BooksOnLoan)
-                .HasForeignKey(fk => fk.BookISBN);
+                .HasForeignKey(fk => fk.BookId);
         }
     }
 }

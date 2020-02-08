@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace elibrary.data.Migrations
 {
-    public partial class Restore_Model_To_Use_ID : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,15 +11,16 @@ namespace elibrary.data.Migrations
                 name: "Books",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ISBN = table.Column<string>(nullable: false),
-                    Id = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Author = table.Column<string>(nullable: false),
                     Category = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.ISBN);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,17 +48,17 @@ namespace elibrary.data.Migrations
                     ReturnDate = table.Column<DateTime>(nullable: true),
                     FineAmount = table.Column<decimal>(nullable: true),
                     UserId = table.Column<int>(nullable: false),
-                    BookISBN = table.Column<string>(nullable: true)
+                    BookId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BooksOnLoan", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BooksOnLoan_Books_BookISBN",
-                        column: x => x.BookISBN,
+                        name: "FK_BooksOnLoan_Books_BookId",
+                        column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "ISBN",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BooksOnLoan_Users_UserId",
                         column: x => x.UserId,
@@ -74,18 +75,18 @@ namespace elibrary.data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rate = table.Column<int>(nullable: false),
                     Comment = table.Column<string>(maxLength: 512, nullable: true),
-                    BookISBN = table.Column<string>(nullable: true),
+                    BookId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserFavoriteBooks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserFavoriteBooks_Books_BookISBN",
-                        column: x => x.BookISBN,
+                        name: "FK_UserFavoriteBooks_Books_BookId",
+                        column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "ISBN",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserFavoriteBooks_Users_UserId",
                         column: x => x.UserId,
@@ -95,9 +96,9 @@ namespace elibrary.data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BooksOnLoan_BookISBN",
+                name: "IX_BooksOnLoan_BookId",
                 table: "BooksOnLoan",
-                column: "BookISBN");
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BooksOnLoan_UserId",
@@ -105,9 +106,9 @@ namespace elibrary.data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFavoriteBooks_BookISBN",
+                name: "IX_UserFavoriteBooks_BookId",
                 table: "UserFavoriteBooks",
-                column: "BookISBN");
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserFavoriteBooks_UserId",

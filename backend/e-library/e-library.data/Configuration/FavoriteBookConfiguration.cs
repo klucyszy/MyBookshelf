@@ -23,7 +23,7 @@ namespace elibrary.data.Configuration
             // Relation R4
             builder.HasOne(e => e.Book)
                 .WithMany(e => e.UseFavoriteBooks)
-                .HasForeignKey(fk => fk.BookISBN);
+                .HasForeignKey(fk => fk.BookId);
         }
     }
 }

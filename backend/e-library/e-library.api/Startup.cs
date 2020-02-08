@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using elibrary.data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using elibrary.data.Repository;
+using elibrary.data.Entities;
 
 namespace elibrary.api
 {
@@ -45,6 +47,9 @@ namespace elibrary.api
                         sqlOpts => sqlOpts.MigrationsAssembly(typeof(ELibraryContext).GetTypeInfo().Assembly.GetName().Name)
                     );
                 });
+
+            //Register dependencies
+            services.AddScoped(typeof(IRepository<>), typeof(DataRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

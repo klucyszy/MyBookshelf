@@ -1,9 +1,9 @@
-INSERT INTO [dbo].[User] ([Id], [Login])
+INSERT INTO [dbo].[Users] ([UserGuid], [Login])
 VALUES
 (NEWID(), 'klucyszyn'),
 (NEWID(), 'kszumlewicz')
 
-INSERT INTO [dbo].[Book] ([ISBN], [Author], [Title], [Category])
+INSERT INTO [dbo].[Books] ([ISBN], [Author], [Title], [Category])
 VALUES
 ('isbn1', 'Author 1', 'Title 1', 0),
 ('isbn2', 'Author 1', 'Title 2', 0),
@@ -11,24 +11,24 @@ VALUES
 ('isbn4', 'Author 2', 'Title 4', 2)
 
 
-INSERT INTO [dbo].[BookOnLoan]
-([IssueDate], [DueReturnDate],[UserId], [BookISBN])
+INSERT INTO [dbo].[BooksOnLoan]
+([IssueDate], [DueReturnDate],[UserId], [BookId])
 VALUES    
-(GETDATE(), DATEADD(MONTH, 1, GETDATE()), 'D0F4EB79-4AC6-41E4-8F12-DD5FAFA9474A', 'isbn1')
+(GETDATE(), DATEADD(MONTH, 1, GETDATE()), 1, 1)
 
 
-INSERT INTO [dbo].[UserFavoriteBook]
-([Rate],[UserId],[BookISBN])
+INSERT INTO [dbo].[UserFavoriteBooks]
+([Rate],[UserId],[BookId])
 VALUES
-(8, 'FB1691EA-32A8-474E-A2B6-E6A25C7CC56B', 'isbn1'),
-(7, 'D0F4EB79-4AC6-41E4-8F12-DD5FAFA9474A', 'isbn2')
+(8, 1, 1),
+(7, 2, 2)
 
 
-select * from dbo.[User]
-select * from Book
-select * from BookOnLoan
-select * from UserFavoriteBook
+select * from dbo.[Users]
+select * from Books
+select * from BooksOnLoan
+select * from UserFavoriteBooks
 
-select * from BookOnLoan
-inner join Book on BookOnLoan.BookISBN = Book.ISBN
-inner join [User] on BookOnLoan.UserId = [User].Id 
+select * from BooksOnLoan
+inner join Books on BooksOnLoan.BookId = Book.ISBN
+inner join [Users] on BookOnLoan.UserId = [User].Id 

@@ -10,8 +10,8 @@ using elibrary.data.Context;
 namespace elibrary.data.Migrations
 {
     [DbContext(typeof(ELibraryContext))]
-    [Migration("20200208160856_Restore_Model_To_Use_ID")]
-    partial class Restore_Model_To_Use_ID
+    [Migration("20200208191157_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,10 @@ namespace elibrary.data.Migrations
 
             modelBuilder.Entity("elibrary.data.Entities.Book", b =>
                 {
-                    b.Property<string>("ISBN")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -33,14 +35,15 @@ namespace elibrary.data.Migrations
                     b.Property<int>("Category")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ISBN");
+                    b.HasKey("Id");
 
                     b.ToTable("Books");
                 });
@@ -52,8 +55,8 @@ namespace elibrary.data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BookISBN")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DueReturnDate")
                         .HasColumnType("datetime2");
@@ -72,7 +75,7 @@ namespace elibrary.data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookISBN");
+                    b.HasIndex("BookId");
 
                     b.HasIndex("UserId");
 
@@ -108,8 +111,8 @@ namespace elibrary.data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BookISBN")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(512)")
@@ -123,7 +126,7 @@ namespace elibrary.data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookISBN");
+                    b.HasIndex("BookId");
 
                     b.HasIndex("UserId");
 
@@ -134,7 +137,9 @@ namespace elibrary.data.Migrations
                 {
                     b.HasOne("elibrary.data.Entities.Book", "Book")
                         .WithMany("BooksOnLoan")
-                        .HasForeignKey("BookISBN");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("elibrary.data.Entities.User", "User")
                         .WithMany("BooksOnLoan")
@@ -147,7 +152,9 @@ namespace elibrary.data.Migrations
                 {
                     b.HasOne("elibrary.data.Entities.Book", "Book")
                         .WithMany("UseFavoriteBooks")
-                        .HasForeignKey("BookISBN");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("elibrary.data.Entities.User", "User")
                         .WithMany("FavoriteBooks")
