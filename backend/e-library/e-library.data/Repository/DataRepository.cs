@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using elibrary.data.Context;
 using elibrary.data.Entities;
@@ -21,6 +22,24 @@ namespace elibrary.data.Repository
         public IEnumerable<TEntity> GetAll()
         {
             return _dbSet.AsEnumerable();
+        }
+
+        public TEntity GetFirstOrDefualt(int id)
+        {
+            return _dbSet.FirstOrDefault(x => x.Id == id);
+        }
+
+        public TEntity GetFirstOrDefaultBy(Func<TEntity, bool> predicate)
+        {
+            if (predicate == null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            foreach(var item in _dbSet)
+            {
+                if (predicate(item)) return item;
+            }
+
+            return default;
         }
     }
 }

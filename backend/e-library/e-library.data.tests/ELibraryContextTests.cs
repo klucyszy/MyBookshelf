@@ -1,4 +1,5 @@
 using AutoFixture;
+using e_library.data.tests.DataSetup;
 using elibrary.data.Context;
 using elibrary.data.Entities;
 using FluentAssertions;
@@ -24,7 +25,7 @@ namespace e_library.data.tests
                 .UseInMemoryDatabase("testDB")
                 .Options;
 
-            SetupInMemoryContext(_options);
+            ELibraryDataContextMock.SetupContext(_options, _fixture);
         }
 
         [Fact]
@@ -45,59 +46,6 @@ namespace e_library.data.tests
         {
             using var context = new ELibraryContext(_options);
             context.Database.EnsureDeleted();
-        }
-
-        private void SetupInMemoryContext(
-            DbContextOptions<ELibraryContext> options)
-        {
-            using var context = new ELibraryContext(options);
-
-            Guid userId1 = _fixture.Create<Guid>();
-            Guid userId2 = _fixture.Create<Guid>();
-            _testOutput.WriteLine($"Users 1 ID: {userId1.ToString()}");
-
-            User user1 = _fixture.Build<User>()
-                .With(x => x.Id, userId1)
-                .Without(x => x.FavoriteBooks)
-                .Without(x => x.BooksOnLoan)
-                .Create();
-            User user2 = _fixture.Build<User>()
-                .With(x => x.Id, userId2)
-                .Without(x => x.BooksOnLoan)
-                .Without(x => x.FavoriteBooks)
-                .Create();
-
-            string isbn1 = _fixture.Create<string>();
-            string isbn2 = _fixture.Create<string>();
-            string isbn3 = _fixture.Create<string>();
-            string isbn4 = _fixture.Create<string>();
-
-            Book book1 = _fixture.Build<Book>()
-                .With(x => x.ISBN, isbn1)
-                .Without(x => x.BooksOnLoan)
-                .Without(x => x.UseFavoriteBooks)
-                .Create();
-            Book book2 = _fixture.Build<Book>()
-                .With(x => x.ISBN, isbn2)
-                .Without(x => x.BooksOnLoan)
-                .Without(x => x.UseFavoriteBooks)
-                .Create();
-            Book book3 = _fixture.Build<Book>()
-                .With(x => x.ISBN, isbn3)
-                .Without(x => x.BooksOnLoan)
-                .Without(x => x.UseFavoriteBooks)
-                .Create();
-            Book book4 = _fixture.Build<Book>()
-                .With(x => x.ISBN, isbn4)
-                .Without(x => x.BooksOnLoan)
-                .Without(x => x.UseFavoriteBooks)
-                .Create();
-
-            context.Users.AddRange(user1, user2);
-            context.Books.AddRange(book1, book2, book3, book4);
-            
-            context.SaveChanges();
-
-        }
+        }        
     }
 }

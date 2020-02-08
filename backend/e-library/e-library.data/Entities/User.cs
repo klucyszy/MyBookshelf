@@ -5,7 +5,7 @@ namespace elibrary.data.Entities
 {
     public class User : BaseEntity
     {
-        public Guid Id { get; set; }
+        public Guid UserGuid { get; set; }
         public string Login { get; set; }
 
         public ICollection<BookOnLoan> BooksOnLoan { get; set; }

@@ -10,6 +10,8 @@ namespace elibrary.data.Configuration
         {
             builder.HasKey(x => x.ISBN);
 
+            builder.Property(x => x.ISBN)
+                .IsRequired();
             builder.Property(x => x.Author)
                 .IsRequired();
             builder.Property(x => x.Title)

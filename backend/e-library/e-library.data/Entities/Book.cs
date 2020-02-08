@@ -1,6 +1,5 @@
 ﻿using elibrary.data.Enums;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace elibrary.data.Entities
 {

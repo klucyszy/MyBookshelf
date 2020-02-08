@@ -31,13 +31,16 @@ namespace elibrary.data.Migrations
                     b.Property<int>("Category")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ISBN");
 
-                    b.ToTable("Book");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("elibrary.data.Entities.BookOnLoan", b =>
@@ -62,8 +65,8 @@ namespace elibrary.data.Migrations
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -71,25 +74,29 @@ namespace elibrary.data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BookOnLoan");
+                    b.ToTable("BooksOnLoan");
                 });
 
             modelBuilder.Entity("elibrary.data.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Login")
                         .IsUnique();
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("elibrary.data.Entities.UserFavoriteBook", b =>
@@ -109,8 +116,8 @@ namespace elibrary.data.Migrations
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -118,7 +125,7 @@ namespace elibrary.data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserFavoriteBook");
+                    b.ToTable("UserFavoriteBooks");
                 });
 
             modelBuilder.Entity("elibrary.data.Entities.BookOnLoan", b =>

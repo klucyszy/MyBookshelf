@@ -3,38 +3,41 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace elibrary.data.Migrations
 {
-    public partial class Initial_Migration : Migration
+    public partial class Restore_Model_To_Use_ID : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Book",
+                name: "Books",
                 columns: table => new
                 {
                     ISBN = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false),
                     Author = table.Column<string>(nullable: false),
                     Category = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Book", x => x.ISBN);
+                    table.PrimaryKey("PK_Books", x => x.ISBN);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserGuid = table.Column<Guid>(nullable: false),
                     Login = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookOnLoan",
+                name: "BooksOnLoan",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -43,28 +46,28 @@ namespace elibrary.data.Migrations
                     DueReturnDate = table.Column<DateTime>(nullable: true),
                     ReturnDate = table.Column<DateTime>(nullable: true),
                     FineAmount = table.Column<decimal>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     BookISBN = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookOnLoan", x => x.Id);
+                    table.PrimaryKey("PK_BooksOnLoan", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookOnLoan_Book_BookISBN",
+                        name: "FK_BooksOnLoan_Books_BookISBN",
                         column: x => x.BookISBN,
-                        principalTable: "Book",
+                        principalTable: "Books",
                         principalColumn: "ISBN",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BookOnLoan_User_UserId",
+                        name: "FK_BooksOnLoan_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserFavoriteBook",
+                name: "UserFavoriteBooks",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -72,65 +75,65 @@ namespace elibrary.data.Migrations
                     Rate = table.Column<int>(nullable: false),
                     Comment = table.Column<string>(maxLength: 512, nullable: true),
                     BookISBN = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserFavoriteBook", x => x.Id);
+                    table.PrimaryKey("PK_UserFavoriteBooks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserFavoriteBook_Book_BookISBN",
+                        name: "FK_UserFavoriteBooks_Books_BookISBN",
                         column: x => x.BookISBN,
-                        principalTable: "Book",
+                        principalTable: "Books",
                         principalColumn: "ISBN",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UserFavoriteBook_User_UserId",
+                        name: "FK_UserFavoriteBooks_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookOnLoan_BookISBN",
-                table: "BookOnLoan",
+                name: "IX_BooksOnLoan_BookISBN",
+                table: "BooksOnLoan",
                 column: "BookISBN");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookOnLoan_UserId",
-                table: "BookOnLoan",
+                name: "IX_BooksOnLoan_UserId",
+                table: "BooksOnLoan",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_Login",
-                table: "User",
+                name: "IX_UserFavoriteBooks_BookISBN",
+                table: "UserFavoriteBooks",
+                column: "BookISBN");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFavoriteBooks_UserId",
+                table: "UserFavoriteBooks",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Login",
+                table: "Users",
                 column: "Login",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserFavoriteBook_BookISBN",
-                table: "UserFavoriteBook",
-                column: "BookISBN");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserFavoriteBook_UserId",
-                table: "UserFavoriteBook",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BookOnLoan");
+                name: "BooksOnLoan");
 
             migrationBuilder.DropTable(
-                name: "UserFavoriteBook");
+                name: "UserFavoriteBooks");
 
             migrationBuilder.DropTable(
-                name: "Book");
+                name: "Books");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }
