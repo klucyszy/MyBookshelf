@@ -30,5 +30,6 @@ select * from BooksOnLoan
 select * from UserFavoriteBooks
 
 select * from BooksOnLoan
-inner join Books on BooksOnLoan.BookId = Book.ISBN
-inner join [Users] on BookOnLoan.UserId = [User].Id 
+inner join Books on BooksOnLoan.BookId = Books.Id
+inner join [Users] on BooksOnLoan.UserId = [Users].Id
+ 
