@@ -6,6 +6,7 @@
             class="brown lighten-2"
             dark
             disable-resize-watcher
+            ex
         >
             <v-list>
                 <template v-for="(item, index) in items">
@@ -50,6 +51,7 @@ export default {
             drawer: false,
             items: [
                 { title: 'About', url: '/about' },
+                { title: 'Test', url: '/test'}
             ]
         };
     },

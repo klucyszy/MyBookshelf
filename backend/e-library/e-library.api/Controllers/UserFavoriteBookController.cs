@@ -2,6 +2,8 @@
 using elibrary.data.Entities;
 using elibrary.data.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,13 +13,15 @@ namespace elibrary.api.Controllers
     [Route("[controller]")]
     public class UserFavoriteBookController : ControllerBase
     {
+        private readonly IDistributedCache _cache;
         private readonly IRepository<Book> _repository;
 
         private const int PageSize = 10;
 
-        public UserFavoriteBookController(IRepository<Book> repository)
+        public UserFavoriteBookController(IRepository<Book> repository, IDistributedCache cache)
         {
             _repository = repository;
+            _cache = cache;
         }
 
         [HttpGet]

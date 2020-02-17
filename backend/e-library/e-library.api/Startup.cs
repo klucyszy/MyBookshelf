@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using elibrary.data.Repository;
 using elibrary.data.Entities;
+using elibrary.api.Configuration;
 
 namespace elibrary.api
 {
@@ -31,6 +32,13 @@ namespace elibrary.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddStackExchangeRedisCache(opts =>
+            {
+                opts.Configuration = Configuration.GetSection(AppSettings.RedisSection)[AppSettings.RedisConfiguration];
+                opts.InstanceName = Configuration.GetSection(AppSettings.RedisSection)[AppSettings.RedisInstanceName];
+                        
+            });
+            
             services.AddControllers();
 
             //Add swagger document generator
@@ -43,7 +51,7 @@ namespace elibrary.api
                 .AddDbContext<ELibraryContext>(opts =>
                 {
                     opts.UseSqlServer(
-                        Configuration.GetConnectionString("ELibraryDB"),
+                        Configuration.GetConnectionString(AppSettings.ELibraryDBName),
                         sqlOpts => sqlOpts.MigrationsAssembly(typeof(ELibraryContext).GetTypeInfo().Assembly.GetName().Name)
                     );
                 });
