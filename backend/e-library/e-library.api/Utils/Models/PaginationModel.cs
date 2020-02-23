@@ -26,7 +26,7 @@ namespace elibrary.api.Utils.Models
 
         private int CountLastPage()
         {
-            return (AllItems / PageSize) % PageSize == 1
+            return (AllItems / PageSize) % PageSize == 0
                 ? (AllItems / PageSize)
                 : (AllItems / PageSize) + 1;
 

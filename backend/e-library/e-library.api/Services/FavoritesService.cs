@@ -24,19 +24,18 @@ namespace elibrary.api.Services
         {
             string redisKey = $"favorites_user_guid_{pageNumber}_{pageSize}";
 
-            List<Book> data;
+            PaginationModel<Book> result;
             if(await _cacheManager.IsCachedAsync(redisKey))
             {
-                data = await _cacheManager.GetObjectAsync<List<Book>>(redisKey);
+                result = await _cacheManager.GetObjectAsync<PaginationModel<Book>>(redisKey);
             }
             else
             {
-                data = _repository.GetAll(pageNumber, pageSize).ToList();
-                await _cacheManager.SetObjectAsync(redisKey, data);
+                List<Book> data = _repository.GetAll(pageNumber, pageSize).ToList();
+                int allItems = _repository.Count();
+                result  = new PaginationModel<Book>(pageNumber, pageSize, allItems, data);
+                await _cacheManager.SetObjectAsync(redisKey, result);
             }
-
-            int allItems = _repository.Count();
-            var result = new PaginationModel<Book>(pageNumber, pageSize, allItems, data);
 
             return result;
         }
