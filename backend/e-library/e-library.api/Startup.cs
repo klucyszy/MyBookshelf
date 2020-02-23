@@ -17,6 +17,10 @@ using System.Reflection;
 using elibrary.data.Repository;
 using elibrary.data.Entities;
 using elibrary.api.Configuration;
+using AutoMapper;
+using elibrary.api.Utils.Redis;
+using elibrary.api.Services.Interfaces;
+using elibrary.api.Services;
 
 namespace elibrary.api
 {
@@ -41,6 +45,8 @@ namespace elibrary.api
             
             services.AddControllers();
 
+            services.AddAutoMapper(typeof(Startup));
+
             //Add swagger document generator
             services.AddSwaggerGen(c => 
             {
@@ -58,6 +64,8 @@ namespace elibrary.api
 
             //Register dependencies
             services.AddScoped(typeof(IRepository<>), typeof(DataRepository<>));
+            services.AddScoped(typeof(ICacheManager), typeof(CacheManager));
+            services.AddScoped(typeof(IFavoritesService), typeof(FavoritesService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

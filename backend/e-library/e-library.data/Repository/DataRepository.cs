@@ -27,7 +27,7 @@ namespace elibrary.data.Repository
         public IEnumerable<TEntity> GetAll(int pageNumber = 1, int pageSize = 100)
         {
             var skipNumber = (pageNumber - 1) * pageSize;
-            
+
             return _dbSet
                 .Skip(skipNumber)
                 .Take(pageSize)

@@ -1,12 +1,12 @@
 ﻿using elibrary.data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace elibrary.api.Utils.Redis
 {
-    public class ICacheManager<TEntity> where TEntity : BaseEntity
+    public interface ICacheManager
     {
+        Task<bool> IsCachedAsync(string key);
+        Task<TObject> GetObjectAsync<TObject>(string key);
+        Task SetObjectAsync<TObject>(string key, TObject value);
     }
 }

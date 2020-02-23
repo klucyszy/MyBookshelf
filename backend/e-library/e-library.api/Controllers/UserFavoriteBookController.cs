@@ -1,53 +1,31 @@
-﻿using elibrary.api.Utils.Models;
-using elibrary.data.Entities;
-using elibrary.data.Repository;
+﻿using elibrary.api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace elibrary.api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("favorites")]
     public class UserFavoriteBookController : ControllerBase
     {
-        private readonly IDistributedCache _cache;
-        private readonly IRepository<Book> _repository;
-
+        private readonly IFavoritesService _favoritesService;
         private const int PageSize = 10;
 
-        public UserFavoriteBookController(IRepository<Book> repository, IDistributedCache cache)
+        public UserFavoriteBookController(IFavoritesService favoritesService)
         {
-            _repository = repository;
-            _cache = cache;
+            _favoritesService = favoritesService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPage(int pageNumber = 1, int? pageSize = null)
+        public async Task<IActionResult> GetPageAsync(int pageNumber = 1, int? pageSize = null)
         {
             if (!pageSize.HasValue) 
                 pageSize = PageSize;
 
-            var books = _repository
-                .GetAll(pageNumber, pageSize.Value)
-                .ToList();
-            var booksCount = _repository.Count();
-            var lastPage = (booksCount / pageSize.Value) % pageSize.Value == 1
-                ? (booksCount / pageSize.Value)
-                : (booksCount / pageSize.Value) + 1;
-
-            var model = new PaginationModel<Book>
-            {
-                Data = books,
-                PageNumber = pageNumber,
-                PageSize = pageSize.Value,
-                LastPage = lastPage
-            };
+            var model = await _favoritesService
+                .GetPageAsync(pageNumber, pageSize.Value);
 
             return Ok(model);
         }
-
     }
 }
