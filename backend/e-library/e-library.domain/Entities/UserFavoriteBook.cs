@@ -1,11 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Elibrary.Domain.Common;
 
-namespace elibrary.data.Entities
+namespace Elibrary.Domain.Entities
 {
     public class UserFavoriteBook : BaseEntity
     {                     
-        [Range(1,10)]
         public int Rate { get; set; }        
         public string Comment { get; set; }
 

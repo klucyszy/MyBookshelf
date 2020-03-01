@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>elibrary.api</RootNamespace>
-    <AssemblyName>elibrary.api</AssemblyName>
+    <RootNamespace>Elibrary.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,5 +19,4 @@
   <ItemGroup>
     <ProjectReference Include="..\e-library.data\e-library.data.csproj" />
   </ItemGroup>
-
 </Project>

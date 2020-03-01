@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Elibrary.Domain.Common;
+using System;
 using System.Collections.Generic;
 
-namespace elibrary.data.Entities
+namespace Elibrary.Domain.Entities
 {
     public class User : BaseEntity
     {

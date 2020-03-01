@@ -1,7 +1,6 @@
 using AutoFixture;
-using e_library.data.tests.DataSetup;
-using elibrary.data.Context;
-using elibrary.data.Entities;
+using e_library.Data.tests.DataSetup;
+using Elibrary.Data.Context;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,17 +8,15 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace e_library.data.tests
+namespace e_library.Data.tests
 {
     public class ELibraryContextTests : IDisposable
     {
         private readonly Fixture _fixture;
-        private readonly ITestOutputHelper _testOutput;
         private readonly DbContextOptions<ELibraryContext> _options;
 
-        public ELibraryContextTests(ITestOutputHelper testOutput)
+        public ELibraryContextTests()
         {
-            _testOutput = testOutput;
             _fixture = new Fixture();
             _options = new DbContextOptionsBuilder<ELibraryContext>()
                 .UseInMemoryDatabase("testDB")

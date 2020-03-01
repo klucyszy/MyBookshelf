@@ -1,13 +1,13 @@
-﻿using elibrary.api.Services.Interfaces;
-using elibrary.api.Utils.Models;
-using elibrary.api.Utils.Redis;
-using elibrary.data.Entities;
-using elibrary.data.Repository;
+﻿using Elibrary.Api.Services.Interfaces;
+using Elibrary.Api.Utils.Models;
+using Elibrary.Api.Utils.Redis;
+using Elibrary.Domain.Entities;
+using Elibrary.Data.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace elibrary.api.Services
+namespace Elibrary.Api.Services
 {
     public class FavoritesService : IFavoritesService
     {
@@ -31,9 +31,9 @@ namespace elibrary.api.Services
             }
             else
             {
-                List<Book> data = _repository.GetAll(pageNumber, pageSize).ToList();
+                List<Book> Data = _repository.GetAll(pageNumber, pageSize).ToList();
                 int allItems = _repository.Count();
-                result  = new PaginationModel<Book>(pageNumber, pageSize, allItems, data);
+                result  = new PaginationModel<Book>(pageNumber, pageSize, allItems, Data);
                 await _cacheManager.SetObjectAsync(redisKey, result);
             }
 

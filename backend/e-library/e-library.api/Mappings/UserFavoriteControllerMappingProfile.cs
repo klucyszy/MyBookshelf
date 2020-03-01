@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace elibrary.api.Mappings
+namespace Elibrary.Api.Mappings
 {
     public class UserFavoriteControllerMappingProfile : Profile
     {

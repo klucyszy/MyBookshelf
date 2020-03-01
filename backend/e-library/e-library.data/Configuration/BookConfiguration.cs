@@ -1,8 +1,8 @@
-﻿using elibrary.data.Entities;
+﻿using Elibrary.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace elibrary.data.Configuration
+namespace Elibrary.Data.Configuration
 {
     public class BookConfiguration : IEntityTypeConfiguration<Book>
     {

@@ -1,16 +1,15 @@
 ﻿
-using elibrary.data.Entities;
+using Elibrary.Domain.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace elibrary.api.Utils.Models
+namespace Elibrary.Api.Utils.Models
 {
     public class PaginationModel<TEntity> where TEntity : BaseEntity
     {
-        public PaginationModel(int pageNumber, int pageSize, int allItems, List<TEntity> data)
+        public PaginationModel(int pageNumber, int pageSize, int allItems, List<TEntity> Data)
         {
-            Data = data;
+            Data = Data;
             PageNumber = pageNumber;
             PageSize = pageSize;
             AllItems = allItems;

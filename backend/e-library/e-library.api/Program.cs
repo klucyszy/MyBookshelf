@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace elibrary.api
+namespace Elibrary.Api
 {
     public class Program
     {

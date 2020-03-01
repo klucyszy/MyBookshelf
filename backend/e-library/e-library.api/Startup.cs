@@ -1,28 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Logging;
-using elibrary.data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using elibrary.data.Repository;
-using elibrary.data.Entities;
-using elibrary.api.Configuration;
+using Elibrary.Api.Configuration;
 using AutoMapper;
-using elibrary.api.Utils.Redis;
-using elibrary.api.Services.Interfaces;
-using elibrary.api.Services;
+using Elibrary.Api.Utils.Redis;
+using Elibrary.Api.Services.Interfaces;
+using Elibrary.Api.Services;
+using Elibrary.Data.Context;
+using Elibrary.Data.Repository;
 
-namespace elibrary.api
+namespace Elibrary.Api
 {
     public class Startup
     {
@@ -69,7 +61,7 @@ namespace elibrary.api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

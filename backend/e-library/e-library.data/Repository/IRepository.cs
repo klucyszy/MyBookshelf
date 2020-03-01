@@ -1,8 +1,8 @@
-﻿using elibrary.data.Entities;
+﻿using Elibrary.Domain.Common;
 using System;
 using System.Collections.Generic;
 
-namespace elibrary.data.Repository
+namespace Elibrary.Data.Repository
 {
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {

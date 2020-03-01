@@ -2,12 +2,11 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using elibrary.data.Context;
+using Elibrary.Data.Context;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace elibrary.data.Migrations
+namespace Elibrary.Data.Migrations
 {
     [DbContext(typeof(ELibraryContext))]
     [Migration("20200208191157_Init")]
@@ -21,7 +20,7 @@ namespace elibrary.data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("elibrary.data.Entities.Book", b =>
+            modelBuilder.Entity("Elibrary.Data.Entities.Book", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +47,7 @@ namespace elibrary.data.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("elibrary.data.Entities.BookOnLoan", b =>
+            modelBuilder.Entity("Elibrary.Data.Entities.BookOnLoan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +81,7 @@ namespace elibrary.data.Migrations
                     b.ToTable("BooksOnLoan");
                 });
 
-            modelBuilder.Entity("elibrary.data.Entities.User", b =>
+            modelBuilder.Entity("Elibrary.Data.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,7 +103,7 @@ namespace elibrary.data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("elibrary.data.Entities.UserFavoriteBook", b =>
+            modelBuilder.Entity("Elibrary.Data.Entities.UserFavoriteBook", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,30 +132,30 @@ namespace elibrary.data.Migrations
                     b.ToTable("UserFavoriteBooks");
                 });
 
-            modelBuilder.Entity("elibrary.data.Entities.BookOnLoan", b =>
+            modelBuilder.Entity("Elibrary.Data.Entities.BookOnLoan", b =>
                 {
-                    b.HasOne("elibrary.data.Entities.Book", "Book")
+                    b.HasOne("Elibrary.Data.Entities.Book", "Book")
                         .WithMany("BooksOnLoan")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("elibrary.data.Entities.User", "User")
+                    b.HasOne("Elibrary.Data.Entities.User", "User")
                         .WithMany("BooksOnLoan")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("elibrary.data.Entities.UserFavoriteBook", b =>
+            modelBuilder.Entity("Elibrary.Data.Entities.UserFavoriteBook", b =>
                 {
-                    b.HasOne("elibrary.data.Entities.Book", "Book")
+                    b.HasOne("Elibrary.Data.Entities.Book", "Book")
                         .WithMany("UseFavoriteBooks")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("elibrary.data.Entities.User", "User")
+                    b.HasOne("Elibrary.Data.Entities.User", "User")
                         .WithMany("FavoriteBooks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

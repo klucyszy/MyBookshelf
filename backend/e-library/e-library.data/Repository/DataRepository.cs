@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using elibrary.data.Context;
-using elibrary.data.Entities;
+using Elibrary.Data.Context;
+using Elibrary.Domain.Common;
+using Elibrary.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace elibrary.data.Repository
+namespace Elibrary.Data.Repository
 {
     public class DataRepository<TEntity> : IRepository<TEntity>
         where TEntity : BaseEntity

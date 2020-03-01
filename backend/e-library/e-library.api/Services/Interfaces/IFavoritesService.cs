@@ -1,9 +1,9 @@
 ﻿
-using elibrary.api.Utils.Models;
-using elibrary.data.Entities;
+using Elibrary.Api.Utils.Models;
+using Elibrary.Domain.Entities;
 using System.Threading.Tasks;
 
-namespace elibrary.api.Services.Interfaces
+namespace Elibrary.Api.Services.Interfaces
 {
     public interface IFavoritesService
     {

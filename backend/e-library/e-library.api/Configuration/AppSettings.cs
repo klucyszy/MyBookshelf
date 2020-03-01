@@ -1,5 +1,5 @@
 ﻿
-namespace elibrary.api.Configuration
+namespace Elibrary.Api.Configuration
 {
     public static class AppSettings
     {

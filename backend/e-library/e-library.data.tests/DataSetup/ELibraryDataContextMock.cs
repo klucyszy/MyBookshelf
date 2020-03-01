@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
-using elibrary.data.Context;
-using elibrary.data.Entities;
+using Elibrary.Data.Context;
+using Elibrary.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace e_library.data.tests.DataSetup
+namespace e_library.Data.tests.DataSetup
 {
     public static class ELibraryDataContextMock
     {

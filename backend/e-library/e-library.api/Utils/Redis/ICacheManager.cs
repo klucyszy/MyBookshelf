@@ -1,7 +1,6 @@
-﻿using elibrary.data.Entities;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace elibrary.api.Utils.Redis
+namespace Elibrary.Api.Utils.Redis
 {
     public interface ICacheManager
     {

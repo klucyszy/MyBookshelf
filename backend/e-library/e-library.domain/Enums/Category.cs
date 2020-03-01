@@ -1,4 +1,4 @@
-﻿namespace elibrary.data.Enums
+﻿namespace Elibrary.Domain.Enums
 {
     public enum Category
     {

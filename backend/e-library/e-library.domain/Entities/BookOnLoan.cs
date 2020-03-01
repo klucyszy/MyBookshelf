@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Elibrary.Domain.Common;
+using System;
 
-namespace elibrary.data.Entities
+namespace Elibrary.Domain.Entities
 {
     public class BookOnLoan : BaseEntity
     {

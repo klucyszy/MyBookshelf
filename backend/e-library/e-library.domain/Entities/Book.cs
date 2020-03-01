@@ -1,7 +1,8 @@
-﻿using elibrary.data.Enums;
+﻿using Elibrary.Domain.Common;
+using Elibrary.Domain.Enums;
 using System.Collections.Generic;
 
-namespace elibrary.data.Entities
+namespace Elibrary.Domain.Entities
 {
     public class Book : BaseEntity
     {

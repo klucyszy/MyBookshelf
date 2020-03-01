@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <RootNamespace>e_library.data.tests</RootNamespace>
+    <RootNamespace>e_library.Data.tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\e-library.data\e-library.data.csproj" />
+    <ProjectReference Include="..\e-library.Data\e-library.Data.csproj" />
   </ItemGroup>
 
 </Project>

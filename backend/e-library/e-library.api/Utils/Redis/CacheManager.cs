@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace elibrary.api.Utils.Redis
+namespace Elibrary.Api.Utils.Redis
 {
     public class CacheManager : ICacheManager
     {

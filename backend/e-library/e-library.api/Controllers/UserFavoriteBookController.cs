@@ -1,8 +1,8 @@
-﻿using elibrary.api.Services.Interfaces;
+﻿using Elibrary.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace elibrary.api.Controllers
+namespace Elibrary.Api.Controllers
 {
     [ApiController]
     [Route("favorites")]

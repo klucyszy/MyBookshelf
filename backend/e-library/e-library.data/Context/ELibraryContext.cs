@@ -1,7 +1,7 @@
-﻿using elibrary.data.Entities;
+﻿using Elibrary.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace elibrary.data.Context
+namespace Elibrary.Data.Context
 {
     public class ELibraryContext : DbContext
     {
