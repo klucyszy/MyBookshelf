@@ -1,8 +1,8 @@
 ﻿using Elibrary.Api.Services.Interfaces;
 using Elibrary.Api.Utils.Models;
 using Elibrary.Api.Utils.Redis;
+using Elibrary.Application.Common.Interfaces;
 using Elibrary.Domain.Entities;
-using Elibrary.Data.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
