@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\e-library.application\e-library.application.csproj" />
     <ProjectReference Include="..\e-library.domain\e-library.domain.csproj" />
   </ItemGroup>
 

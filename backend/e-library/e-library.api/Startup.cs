@@ -13,6 +13,7 @@ using Elibrary.Api.Services.Interfaces;
 using Elibrary.Api.Services;
 using Elibrary.Data.Context;
 using Elibrary.Data.Repository;
+using Elibrary.Data;
 
 namespace Elibrary.Api
 {
@@ -45,17 +46,10 @@ namespace Elibrary.Api
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "e-library API", Version = "v1.0" });
             });
 
-            services.AddEntityFrameworkSqlServer()
-                .AddDbContext<ELibraryContext>(opts =>
-                {
-                    opts.UseSqlServer(
-                        Configuration.GetConnectionString(AppSettings.ELibraryDBName),
-                        sqlOpts => sqlOpts.MigrationsAssembly(typeof(ELibraryContext).GetTypeInfo().Assembly.GetName().Name)
-                    );
-                });
+            //Add database
+            services.AddDatabase(Configuration);
 
             //Register dependencies
-            services.AddScoped(typeof(IRepository<>), typeof(DataRepository<>));
             services.AddScoped(typeof(ICacheManager), typeof(CacheManager));
             services.AddScoped(typeof(IFavoritesService), typeof(FavoritesService));
         }

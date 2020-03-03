@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Elibrary.Application.Common.Interfaces;
 using Elibrary.Data.Context;
 using Elibrary.Domain.Common;
-using Elibrary.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Elibrary.Data.Repository
@@ -56,6 +57,16 @@ namespace Elibrary.Data.Repository
         public int Count()
         {
             return _dbSet.Count();
+        }
+
+        public async Task<TEntity> AddAsync(TEntity entity, bool autoSave = true)
+        {
+            await _dbSet.AddAsync(entity);
+
+            if (autoSave)
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            return entity;
         }
     }
 }
