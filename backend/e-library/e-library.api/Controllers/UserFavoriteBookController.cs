@@ -1,9 +1,11 @@
 ﻿using Elibrary.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Elibrary.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("favorites")]
     public class UserFavoriteBookController : ControllerBase
@@ -11,7 +13,8 @@ namespace Elibrary.Api.Controllers
         private readonly IFavoritesService _favoritesService;
         private const int PageSize = 10;
 
-        public UserFavoriteBookController(IFavoritesService favoritesService)
+        public UserFavoriteBookController(
+            IFavoritesService favoritesService)
         {
             _favoritesService = favoritesService;
         }

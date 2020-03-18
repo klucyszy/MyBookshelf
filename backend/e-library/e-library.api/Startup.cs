@@ -4,16 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Elibrary.Api.Configuration;
 using AutoMapper;
 using Elibrary.Api.Utils.Redis;
 using Elibrary.Api.Services.Interfaces;
 using Elibrary.Api.Services;
-using Elibrary.Data.Context;
-using Elibrary.Data.Repository;
 using Elibrary.Data;
+using elibrary.identity;
 
 namespace Elibrary.Api
 {
@@ -33,21 +30,24 @@ namespace Elibrary.Api
             {
                 opts.Configuration = Configuration.GetSection(AppSettings.RedisSection)[AppSettings.RedisConfiguration];
                 opts.InstanceName = Configuration.GetSection(AppSettings.RedisSection)[AppSettings.RedisInstanceName];
-                        
+
             });
-            
+
             services.AddControllers();
 
             services.AddAutoMapper(typeof(Startup));
 
             //Add swagger document generator
-            services.AddSwaggerGen(c => 
+            services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "e-library API", Version = "v1.0" });
             });
 
             //Add database
             services.AddDatabase(Configuration);
+
+            //Add identity
+            services.AddGoogleIdentity();
 
             //Register dependencies
             services.AddScoped(typeof(ICacheManager), typeof(CacheManager));
@@ -66,12 +66,14 @@ namespace Elibrary.Api
 
             app.UseSwagger();
 
-            app.UseSwaggerUI(c => 
+            app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "e-library v1.0 API");
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
