@@ -11,6 +11,7 @@ using Elibrary.Api.Services.Interfaces;
 using Elibrary.Api.Services;
 using Elibrary.Data;
 using elibrary.identity;
+using Elibrary.Application;
 
 namespace Elibrary.Api
 {
@@ -48,6 +49,9 @@ namespace Elibrary.Api
 
             //Add identity
             services.AddGoogleIdentity();
+
+            //Add application logic
+            services.AddApplication();
 
             //Register dependencies
             services.AddScoped(typeof(ICacheManager), typeof(CacheManager));

@@ -1,5 +1,6 @@
-﻿using Elibrary.Api.Services.Interfaces;
-using Elibrary.Application.Common.Controllers;
+﻿using Elibrary.Application.Common.Controllers;
+using Elibrary.Application.UserFavoriteBookArea.Queries.GetUserFavoriteBooks;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,25 +11,27 @@ namespace Elibrary.Api.Controllers
     [Route("favorites")]
     public class UserFavoriteBookController : BaseController
     {
-        private readonly IFavoritesService _favoritesService;
+        private readonly IMediator _mediator;
         private const int PageSize = 10;
 
-        public UserFavoriteBookController(
-            IFavoritesService favoritesService)
+        public UserFavoriteBookController(IMediator mediator)
         {
-            _favoritesService = favoritesService;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPageAsync(int pageNumber = 1, int? pageSize = null)
+        public async Task<ActionResult<UserFavoriteBooksViewModel>> GetPageAsync(int pageNumber = 1, int? pageSize = null)
         {
-            if (!pageSize.HasValue) 
-                pageSize = PageSize;
+            
+            return await _mediator.Send(new GetUserFavoriteBooksQuery());
 
-            var model = await _favoritesService
-                .GetPageAsync(pageNumber, pageSize.Value);
+            //if (!pageSize.HasValue) 
+            //    pageSize = PageSize;
 
-            return Ok(model);
+            //var model = await _favoritesService
+            //    .GetPageAsync(pageNumber, pageSize.Value);
+
+            //return Ok(model);
         }
     }
 }
