@@ -11,27 +11,12 @@ namespace Elibrary.Api.Controllers
     [Route("favorites")]
     public class UserFavoriteBookController : BaseController
     {
-        private readonly IMediator _mediator;
         private const int PageSize = 10;
 
-        public UserFavoriteBookController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         [HttpGet]
-        public async Task<ActionResult<UserFavoriteBooksViewModel>> GetPageAsync(int pageNumber = 1, int? pageSize = null)
-        {
-            
-            return await _mediator.Send(new GetUserFavoriteBooksQuery());
-
-            //if (!pageSize.HasValue) 
-            //    pageSize = PageSize;
-
-            //var model = await _favoritesService
-            //    .GetPageAsync(pageNumber, pageSize.Value);
-
-            //return Ok(model);
+        public async Task<ActionResult<UserFavoriteBooksViewModel>> GetPageAsync(int pageNumber = 1, int? pageSize = PageSize)
+        {            
+            return await Mediator.Send(new GetUserFavoriteBooksQuery(pageNumber, pageSize.Value));
         }
     }
 }

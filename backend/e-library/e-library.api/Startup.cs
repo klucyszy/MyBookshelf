@@ -36,8 +36,6 @@ namespace Elibrary.Api
 
             services.AddControllers();
 
-            services.AddAutoMapper(typeof(Startup));
-
             //Add swagger document generator
             services.AddSwaggerGen(c =>
             {

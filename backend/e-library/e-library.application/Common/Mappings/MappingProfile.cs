@@ -9,7 +9,7 @@ namespace Elibrary.Application.Common.Mappings
     {
         public MappingProfile()
         {
-            ApplyMappingsFromCurrentAssembly(Assembly.GetExecutingAssembly());
+            ApplyMappingsFromCurrentAssembly(Assembly.GetAssembly(typeof(MappingProfile)));
         }
 
         private void ApplyMappingsFromCurrentAssembly(Assembly assembly)
