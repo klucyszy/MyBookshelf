@@ -14,4 +14,9 @@
     <ProjectReference Include="..\e-library.domain\e-library.domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UserFavoriteBook\Commands\" />
+    <Folder Include="UserFavoriteBook\Queries\" />
+  </ItemGroup>
+
 </Project>
