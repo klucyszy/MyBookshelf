@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\e-library.application\e-library.application.csproj" />
     <ProjectReference Include="..\e-library.data\e-library.data.csproj" />
     <ProjectReference Include="..\e-library.identity\e-library.identity.csproj" />
   </ItemGroup>
