@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Elibrary.Data.Migrations
 {
-    public partial class Init_Database : Migration
+    public partial class InitDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,9 @@ namespace Elibrary.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<Guid>(nullable: true),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     ISBN = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: false),
@@ -33,11 +33,11 @@ namespace Elibrary.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<Guid>(nullable: true),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdateDate = table.Column<DateTime>(nullable: true),
-                    UserGuid = table.Column<Guid>(nullable: false),
+                    UserIdentifier = table.Column<string>(nullable: true),
                     Login = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -51,9 +51,9 @@ namespace Elibrary.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<Guid>(nullable: true),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     IssueDate = table.Column<DateTime>(nullable: false),
                     DueReturnDate = table.Column<DateTime>(nullable: true),
@@ -85,9 +85,9 @@ namespace Elibrary.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedBy = table.Column<Guid>(nullable: false),
+                    CreatedBy = table.Column<string>(nullable: true),
                     CreateDate = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<Guid>(nullable: true),
+                    UpdatedBy = table.Column<string>(nullable: true),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     Rate = table.Column<int>(nullable: false),
                     Comment = table.Column<string>(maxLength: 512, nullable: true),
@@ -110,6 +110,16 @@ namespace Elibrary.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreateDate", "CreatedBy", "Login", "UpdateDate", "UpdatedBy", "UserIdentifier" },
+                values: new object[] { 1, new DateTime(2020, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin", "testUser", null, null, "testId" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreateDate", "CreatedBy", "Login", "UpdateDate", "UpdatedBy", "UserIdentifier" },
+                values: new object[] { 2, new DateTime(2020, 3, 25, 12, 12, 12, 0, DateTimeKind.Unspecified), "admin", "klucyszyn1995@gmail.com", null, null, "106825456884718575110" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BooksOnLoan_BookId",

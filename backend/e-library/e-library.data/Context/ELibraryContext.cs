@@ -1,4 +1,5 @@
 ﻿using Elibrary.Application.Common.Interfaces;
+using Elibrary.Data.Seed;
 using Elibrary.Domain.Common;
 using Elibrary.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -30,11 +31,11 @@ namespace Elibrary.Data.Context
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.CreatedBy = Guid.NewGuid();
+                        entry.Entity.CreatedBy = Guid.NewGuid().ToString();
                         entry.Entity.CreateDate = DateTime.UtcNow;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.UpdatedBy = Guid.NewGuid();
+                        entry.Entity.UpdatedBy = Guid.NewGuid().ToString();
                         entry.Entity.UpdateDate = DateTime.UtcNow;
                         break;
                 }
@@ -46,6 +47,7 @@ namespace Elibrary.Data.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.CreateSampleData();
 
             base.OnModelCreating(builder);
         }

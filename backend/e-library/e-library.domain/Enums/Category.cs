@@ -9,6 +9,7 @@
         Kids,
         ScienceFiction,
         Fantasy,
+        Psychology,
         Other
     }
 }

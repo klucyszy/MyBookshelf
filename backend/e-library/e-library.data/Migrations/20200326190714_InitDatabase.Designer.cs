@@ -4,14 +4,16 @@ using Elibrary.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Elibrary.Data.Migrations
 {
     [DbContext(typeof(ELibraryContext))]
-    partial class ELibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20200326190714_InitDatabase")]
+    partial class InitDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,38 +58,6 @@ namespace Elibrary.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Author = "David Allen",
-                            Category = 7,
-                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "admin",
-                            ISBN = "ISBN-1",
-                            Title = "Gettings Things Done"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Author = "Charles Duhigg",
-                            Category = 7,
-                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "admin",
-                            ISBN = "ISBN-2",
-                            Title = "Siła Nawyku"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Author = "Daniel Kahneman",
-                            Category = 7,
-                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "admin",
-                            ISBN = "ISBN-3",
-                            Title = "Pułapki Myślenia"
-                        });
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.BookOnLoan", b =>
@@ -227,24 +197,6 @@ namespace Elibrary.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserFavoriteBooks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BookId = 1,
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Rate = 8,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BookId = 2,
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Rate = 9,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.BookOnLoan", b =>

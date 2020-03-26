@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elibrary.Data.Migrations
 {
     [DbContext(typeof(ELibraryContext))]
-    [Migration("20200316193926_Init_Database")]
-    partial class Init_Database
+    [Migration("20200326192043_SeedFavBooks")]
+    partial class SeedFavBooks
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -38,8 +38,8 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN")
                         .IsRequired()
@@ -52,12 +52,44 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Author = "David Allen",
+                            Category = 7,
+                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "admin",
+                            ISBN = "ISBN-1",
+                            Title = "Gettings Things Done"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Author = "Charles Duhigg",
+                            Category = 7,
+                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "admin",
+                            ISBN = "ISBN-2",
+                            Title = "Siła Nawyku"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Author = "Daniel Kahneman",
+                            Category = 7,
+                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "admin",
+                            ISBN = "ISBN-3",
+                            Title = "Pułapki Myślenia"
+                        });
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.BookOnLoan", b =>
@@ -73,8 +105,8 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DueReturnDate")
                         .HasColumnType("datetime2");
@@ -91,8 +123,8 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -116,8 +148,8 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -126,11 +158,11 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserGuid")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserIdentifier")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -138,6 +170,24 @@ namespace Elibrary.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2020, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "admin",
+                            Login = "testUser",
+                            UserIdentifier = "testId"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(2020, 3, 25, 12, 12, 12, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "admin",
+                            Login = "klucyszyn1995@gmail.com",
+                            UserIdentifier = "106825456884718575110"
+                        });
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.UserFavoriteBook", b =>
@@ -157,8 +207,8 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
@@ -166,8 +216,8 @@ namespace Elibrary.Data.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -179,6 +229,24 @@ namespace Elibrary.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserFavoriteBooks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BookId = 1,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Rate = 8,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BookId = 2,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Rate = 9,
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.BookOnLoan", b =>
