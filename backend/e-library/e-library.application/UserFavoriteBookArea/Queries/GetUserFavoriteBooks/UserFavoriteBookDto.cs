@@ -10,6 +10,7 @@ namespace Elibrary.Application.UserFavoriteBookArea.Queries.GetUserFavoriteBooks
         public string Comment { get; set; }
         public int BookId { get; set; }
         public int UserId { get; set; }
+        public BookDto Book { get; set; }
 
         public void Mapping(Profile profile)
         {

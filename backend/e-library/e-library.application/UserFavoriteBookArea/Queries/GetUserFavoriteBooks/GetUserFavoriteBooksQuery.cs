@@ -5,6 +5,8 @@ using Elibrary.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,11 +14,13 @@ namespace Elibrary.Application.UserFavoriteBookArea.Queries.GetUserFavoriteBooks
 {
     public class GetUserFavoriteBooksQuery : IRequest<UserFavoriteBooksViewModel>
     {
+        public string UserId { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
 
-        public GetUserFavoriteBooksQuery(int pageNumber, int pageSize)
+        public GetUserFavoriteBooksQuery(string userId, int pageNumber, int pageSize)
         {
+            UserId = userId;
             PageNumber = pageNumber;
             PageSize = pageSize;
         }
@@ -38,9 +42,19 @@ namespace Elibrary.Application.UserFavoriteBookArea.Queries.GetUserFavoriteBooks
             {
                 var viewModel = new UserFavoriteBooksViewModel();
 
-                viewModel.FavoriteBooks = await _context.UserFavoriteBooks
+                User user = await _context.Users.FirstOrDefaultAsync(x => x.UserIdentifier == request.UserId);
+                if (user == null)
+                {
+                    return null;
+                }
+
+                var books = await _context.UserFavoriteBooks
+                    .Include(x => x.Book)
+                    .Where(x => x.User.Id == user.Id)
                     .ProjectTo<UserFavoriteBookDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
+
+                viewModel.FavoriteBooks = books;
                 viewModel.ApplyPagination(request.PageNumber, request.PageSize, viewModel.FavoriteBooks.Count);
 
                 return viewModel;

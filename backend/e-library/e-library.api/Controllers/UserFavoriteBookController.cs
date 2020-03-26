@@ -16,7 +16,7 @@ namespace Elibrary.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<UserFavoriteBooksViewModel>> GetPageAsync(int pageNumber = 1, int? pageSize = PageSize)
         {            
-            return await Mediator.Send(new GetUserFavoriteBooksQuery(pageNumber, pageSize.Value));
+            return await Mediator.Send(new GetUserFavoriteBooksQuery(CurrentUser.Id, pageNumber, pageSize.Value));
         }
     }
 }
