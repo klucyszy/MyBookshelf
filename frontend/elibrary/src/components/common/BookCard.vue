@@ -1,13 +1,14 @@
 <template>
-    <v-card shaped class="mx-auto" 
-            max-width="250">
+    <v-card shaped class="mx-3"
+            min-width="200" 
+            max-width="200">
         
         <v-img :src=Book.ImageUrl
-            height="200px">
+            height="165px">
         </v-img>
 
         <div align="left" class="pl-4">
-            <v-card-title class="pt-1 pb-0 pl-0">{{Book.Title}}</v-card-title>
+            <v-card-title class="pt-1 pb-0 pl-0">{{bookTitle}}</v-card-title>
             <div class="subtitle-1"> {{Book.Author}} </div>
         </div>
         <v-card-actions class="pt-0">
@@ -31,7 +32,22 @@
 
 
 export default {
-    name: 'ProductCard',
+    name: 'BookCard',
+    props: {
+        Book: {
+            type: Object,
+            default: function() {
+                return {
+                    Rate: 1,
+                    IsFavorite: false,
+                    Author: "",
+                    Title: "",
+                    Category: "",
+                    ImageUrl: "#"   
+                }            
+            }
+        }
+    },
     methods: {
         rateUpdated: function(value){
             this.Book.Rate = value;
@@ -42,62 +58,15 @@ export default {
     },
     data() {
         return {
-            Book: {
-                    Rate: 4,
-                    IsFavorite: true,
-                    Author: "David Allen",
-                    Title: "Gettings Things Done",
-                    Category: "Psychology",
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                
-            },
-            FavoriteBooks: [
-                {
-                    Rate: 4,
-                    Author: "David Allen",
-                    Title: "Gettings Things Done",
-                    Category: "Psychology",
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                },
-                {
-                    Rate: 8,
-                    Author: "Daniel Kahneman",
-                    Title: "Pułapki Myślenia",
-                    Category: "Psychology",
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                },
-                {
-                    Rate: 8.5,
-                    Author: "Charles Duhigg",
-                    Title: "Siła nawyku",
-                    Category: "Psychology",
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                },
-                {
-                    Rate: 5,
-                    Author: "Name Surname",
-                    Title: "Book Title 1",
-                    Category: "Category 3",
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                },
-                {
-                    Rate: 5,
-                    Author: "Name Surname",
-                    Title: "Book Title 2",
-                    Category: "Category 2",
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                },
-                {
-                    Rate: 5,
-                    Author: "Name Surname",
-                    Title: "Book Title 3",
-                    Category: "Category 1",
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                }
-            ]
         };
     },
     computed: {
+        bookTitle: function(){
+            if (this.Book.Title.length > 16)
+                return this.Book.Title.substring(0, 16) + "..";
+            else 
+                return this.Book.Title;
+        }
     }
 };
 </script>

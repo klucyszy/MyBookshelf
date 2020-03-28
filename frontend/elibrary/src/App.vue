@@ -2,7 +2,7 @@
     <v-app>
         <app-header></app-header>
         <v-content transition="slide-x-transition" class="grey lighten-5 my-5" justify="center" align="center">
-            <book-card></book-card>
+            <books-slider></books-slider>         
             <router-view></router-view>
         </v-content>
     </v-app>
@@ -10,13 +10,13 @@
 
 <script>
 import AppHeader from '@/components/layout/AppHeader';
-import BookCard from '@/components/common/BookCard';
+import BooksSlider from '@/components/common/BooksSlider';
 
 export default {
     name: 'App',
     components: {
       AppHeader,
-      BookCard
+      BooksSlider,
     }
 };
 </script>
