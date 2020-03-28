@@ -1,13 +1,6 @@
 <template>
     <span>
-        <v-navigation-drawer
-            app
-            v-model="drawer"
-            class="brown lighten-2"
-            dark
-            disable-resize-watcher
-            ex
-        >
+        <v-navigation-drawer app v-model="drawer" class="grey lighten-5" disable-resize-watcher ex>
             <v-list>
                 <template v-for="(item, index) in items">
                     <v-list-item :key="index" :to="item.url">
@@ -19,7 +12,7 @@
                 </template>
             </v-list>
         </v-navigation-drawer>
-        <v-toolbar color="brown darken-4" dark>
+        <v-toolbar color="grey lighten-5" dark>
             <v-app-bar-nav-icon
                 class="hidden-md-and-up"
                 @click="drawer = !drawer"
@@ -31,13 +24,14 @@
                 </v-toolbar-title>
             </router-link>
             <v-spacer class="hidden-sm-and-down"></v-spacer>
-            <v-btn
-                text
-                class="hidden-sm-and-down nav-menu"
-                to="/about"
-                data-cy="menuBtn"
-                >About</v-btn
-            >            
+            <v-btn icon class="router-link-color">
+                <v-icon dark>fas fa-search</v-icon>
+            </v-btn>
+            <template v-for="(item, index) in items">
+                <v-btn :key="index" text class="hidden-sm-and-down nav-menu router-link-color" to="item.url" data-cy="menuBtn">
+                    {{item.title}}
+                </v-btn>
+            </template>
         </v-toolbar>
     </span>
 </template>
@@ -47,11 +41,11 @@ export default {
     name: 'AppHeader',
     data() {
         return {
-            appTitle: 'E-Library',
+            appTitle: 'Bookshelf',
             drawer: false,
             items: [
-                { title: 'About', url: '/about' },
-                { title: 'Test', url: '/test'}
+                { title: 'My Books', url: '/my-books'},
+                { title: 'About', url: '/about' },                
             ]
         };
     },
@@ -63,8 +57,9 @@ export default {
 </script>
 
 <style scoped>
+
 .router-link-color {
-    color: white;
+    color: #263238 !important;
     text-decoration: none;
 }
 </style>
