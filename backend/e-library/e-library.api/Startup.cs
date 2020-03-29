@@ -5,10 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Elibrary.Api.Configuration;
-using AutoMapper;
 using Elibrary.Api.Utils.Redis;
-using Elibrary.Api.Services.Interfaces;
-using Elibrary.Api.Services;
 using Elibrary.Data;
 using elibrary.identity;
 using Elibrary.Application;
@@ -53,7 +50,6 @@ namespace Elibrary.Api
 
             //Register dependencies
             services.AddScoped(typeof(ICacheManager), typeof(CacheManager));
-            services.AddScoped(typeof(IFavoritesService), typeof(FavoritesService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
