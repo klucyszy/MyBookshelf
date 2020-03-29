@@ -12,7 +12,7 @@
                 </template>
             </v-list>
         </v-navigation-drawer>
-        <v-toolbar color="grey lighten-5" dark>
+        <v-toolbar color="grey lighten-5">
             <v-app-bar-nav-icon
                 class="hidden-md-and-up"
                 @click="drawer = !drawer"
@@ -24,12 +24,10 @@
                 </v-toolbar-title>
             </router-link>
             <v-spacer class="hidden-sm-and-down"></v-spacer>
-            <v-btn icon class="router-link-color">
-                <v-icon dark>fas fa-search</v-icon>
-            </v-btn>
+            <search-field></search-field>
             <template v-for="(item, index) in items">
-                <v-btn :key="index" text class="hidden-sm-and-down nav-menu router-link-color" to="item.url" data-cy="menuBtn">
-                    {{item.title}}
+                <v-btn :key="index" icon class="ma-2 hidden-sm-and-down nav-menu router-link-color" :to="item.url" data-cy="menuBtn">
+                    <v-icon>{{item.icon}}</v-icon>
                 </v-btn>
             </template>
         </v-toolbar>
@@ -37,15 +35,21 @@
 </template>
 
 <script>
+import SearchField from './../../components/common/SearchField'
+
 export default {
     name: 'AppHeader',
+    components: {
+        SearchField
+    },
     data() {
         return {
             appTitle: 'Bookshelf',
             drawer: false,
             items: [
-                { title: 'My Books', url: '/my-books'},
-                { title: 'About', url: '/about' },                
+                { title: 'Bookshelf', url: '/bookshelf', icon: 'mdi-bookshelf'},
+                { title: 'About', url: '/about', icon: 'mdi-information-variant' },
+                { title: 'SignIn', url: '/sign-in', icon: 'mdi-account-outline' },                
             ]
         };
     },
@@ -60,6 +64,7 @@ export default {
 
 .router-link-color {
     color: #263238 !important;
+    background-color: transparent !important;
     text-decoration: none;
 }
 </style>

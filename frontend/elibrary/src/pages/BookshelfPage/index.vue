@@ -1,13 +1,13 @@
 <template>
-
+  <search-field></search-field>
 </template>
 
 <script>
-
+import SearchField from './../../components/common/SearchField';
 export default {
-    name: 'App',
+    name: 'Bookshelf',
     components: {
-      AppHeader
+      SearchField
     }
 };
 </script>
