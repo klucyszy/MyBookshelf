@@ -2,7 +2,7 @@
     <span>
         <v-navigation-drawer app v-model="drawer" class="grey lighten-5" disable-resize-watcher ex>
             <v-list>
-                <template v-for="(item, index) in items">
+                <template v-for="(item, index) in pageItems">
                     <v-list-item :key="index" :to="item.url">
                         <v-list-item-content>
                             {{ item.title }}
@@ -25,11 +25,29 @@
             </router-link>
             <v-spacer class="hidden-sm-and-down"></v-spacer>
             <search-field></search-field>
-            <template v-for="(item, index) in items">
+            <template v-for="(item, index) in pageItems">
                 <v-btn :key="index" icon class="ma-2 hidden-sm-and-down nav-menu router-link-color" :to="item.url" data-cy="menuBtn">
                     <v-icon>{{item.icon}}</v-icon>
                 </v-btn>
             </template>
+            <v-menu icon open-on-hover offset-y>
+                <template v-slot:activator="{on}">
+                    <v-btn icon v-on="on" >
+                        <v-icon>mdi-account-outline</v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item
+                        v-for="(item, index) in signInItems"
+                        :key="index"
+                        :disabled="item.disabled"
+                        :to="item.url"
+                        data-cy="menuBtn"
+                    >
+                        <v-list-item-title>{{item.title}}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </v-toolbar>
     </span>
 </template>
@@ -46,10 +64,15 @@ export default {
         return {
             appTitle: 'Bookshelf',
             drawer: false,
-            items: [
+            pageItems: [
                 { title: 'Bookshelf', url: '/bookshelf', icon: 'mdi-bookshelf'},
-                { title: 'About', url: '/about', icon: 'mdi-information-variant' },
-                { title: 'SignIn', url: '/sign-in', icon: 'mdi-account-outline' },                
+                { title: 'About', url: '/about', icon: 'mdi-information-variant' },           
+            ],
+            signInItems: [
+                { title: "My profile", url: '/my-profile', disabled: true },
+                { title: "Sign In", url: '/sign-in', disabled: false },
+                { title: "Sign Out", url: '/sign-out', disabled: false },
+                
             ]
         };
     },
