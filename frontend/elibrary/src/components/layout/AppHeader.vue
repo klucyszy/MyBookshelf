@@ -34,6 +34,7 @@
                 <template v-slot:activator="{on}">
                     <v-btn icon v-on="on" >
                         <v-icon>mdi-account-outline</v-icon>
+                        <v-icon>mdi-menu-down</v-icon>
                     </v-btn>
                 </template>
                 <v-list>
