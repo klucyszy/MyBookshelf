@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace elibrary.identity
 {
@@ -13,15 +15,24 @@ namespace elibrary.identity
                 .AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ELibraryContext>();
             services
-                .AddAuthentication(options =>
+                //.AddAuthentication(options =>
+                //{
+                //    options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+                //    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+                //})
+                .AddAuthentication()
+                .AddJwtBearer(cfg =>
                 {
-                    options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-                })
-                .AddGoogle(options =>
-                {
-                    options.ClientId = "920200399874-4qmdqvfdgt4mq5i8jsqfdf8it3j68sjl.apps.googleusercontent.com";
-                    options.ClientSecret = "3_h-otETGGfUHt-Gnz7i4Raw";
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = false;
+
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ePiQ6aj0idkdHhIXQgHh7n2Z")),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
                 });
 
             return services;

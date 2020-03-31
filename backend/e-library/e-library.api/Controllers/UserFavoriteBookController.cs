@@ -1,6 +1,5 @@
 ﻿using Elibrary.Application.Common.Controllers;
 using Elibrary.Application.UserFavoriteBookArea.Queries.GetUserFavoriteBooks;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 namespace Elibrary.Api.Controllers
 {
     [Authorize]
-    [Route("favorites")]
+    [Route("api/favorites")]
     public class UserFavoriteBookController : BaseController
     {
         private const int PageSize = 10;
