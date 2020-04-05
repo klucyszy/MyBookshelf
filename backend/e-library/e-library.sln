@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-library.domain", "e-libra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-library.application", "e-library.application\e-library.application.csproj", "{675FB445-C628-4E73-B00F-E451D20680AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "e-library.identity", "e-library.identity\e-library.identity.csproj", "{02762908-3AAD-4C04-981F-B144C828E282}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e-library.identity", "e-library.identity\e-library.identity.csproj", "{02762908-3AAD-4C04-981F-B144C828E282}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

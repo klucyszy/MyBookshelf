@@ -1,6 +1,5 @@
 ﻿using Elibrary.Application.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 
 namespace Elibrary.Application.Common.Models

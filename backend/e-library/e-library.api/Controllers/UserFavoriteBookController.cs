@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Elibrary.Api.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/favorites")]
     public class UserFavoriteBookController : BaseController
     {

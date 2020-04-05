@@ -31,8 +31,6 @@ namespace Elibrary.Api
 
             });
 
-            services.AddControllers();
-
             //Add swagger document generator
             services.AddSwaggerGen(c =>
             {
@@ -43,10 +41,14 @@ namespace Elibrary.Api
             services.AddDatabase(Configuration);
 
             //Add identity
-            services.AddGoogleIdentity();
+            services.AddGoogleIdentity(Configuration);
 
             //Add application logic
             services.AddApplication();
+
+            services.AddOptions();
+
+            services.AddControllers();
 
             //Register dependencies
             services.AddScoped(typeof(ICacheManager), typeof(CacheManager));
