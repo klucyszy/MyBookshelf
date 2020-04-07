@@ -1,15 +1,11 @@
 import Vue from 'vue';
+import GAuth from 'vue-google-oauth2'
 import App from './App.vue';
 import '@mdi/font/css/materialdesignicons.css' ;
-import GAuth from 'vue-google-oauth2';
 import vuetify from './plugins/vuetify';
+import googleAuth from './plugins/googleAuth';
 import router from './router';
-
-const gauthOptions = {
-  clientId: '920200399874-ph38c06nsdv3sskcjjsiinna3uh5ojo7.apps.googleusercontent.com',
-  scope: 'profile email',
-  prompt: 'select_account'
-}
+import store from './store';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true;
@@ -17,10 +13,12 @@ Vue.config.devtools = true;
 Vue.use(vuetify, {
   iconfont: 'mdi'
 });
-Vue.use(GAuth, gauthOptions);
+
+Vue.use(GAuth, googleAuth.gauthOptions);
 
 new Vue({
   vuetify,
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
