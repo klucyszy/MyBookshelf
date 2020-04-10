@@ -1,13 +1,14 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-
+  <div class="my-profile">
+    <h1>My Profile</h1>
+    <p>{{user}}</p>
   </div>
 </template>
 
+
 <script>
 export default {
-  name: 'Home',
+  name: 'MyProfile',
   components: {
   },
   computed: {

@@ -14,6 +14,8 @@ namespace Elibrary.Api
 {
     public class Startup
     {
+        static string CorsBasicPolicy = "allowedOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +26,17 @@ namespace Elibrary.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsBasicPolicy,
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
+
             services.AddStackExchangeRedisCache(opts =>
             {
                 opts.Configuration = Configuration.GetSection(AppSettings.RedisSection)[AppSettings.RedisConfiguration];
@@ -61,6 +74,8 @@ namespace Elibrary.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(CorsBasicPolicy);
 
             app.UseHttpsRedirection();
 

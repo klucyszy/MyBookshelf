@@ -15,8 +15,18 @@ const actions = {
         this._vm.$gAuth
         .signIn()
         .then(GoogleUser => {
-            context.commit('SET_USER_STATE', GoogleUser.Qt);
-            context.commit('SET_ID_TOKEN_STATE', GoogleUser.uc.id_token);
+            let response = GoogleUser.getAuthResponse();
+            context.commit('SET_USER_STATE', GoogleUser.getBasicProfile());
+
+            this._vm.axios.post('/api/authorize/google', {
+                'token': response.id_token
+            })
+            .then((res) => {
+                context.commit('SET_ID_TOKEN_STATE', res.data.token);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         })
         .catch(err => {
             console.log("Authorization failed: " + err)

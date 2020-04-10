@@ -1,5 +1,4 @@
-﻿using elibrary.identity.Configuration;
-using elibrary.identity.Services;
+﻿using elibrary.identity.Services;
 using Elibrary.Application.Identity;
 using Elibrary.Data.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
