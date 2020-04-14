@@ -7,9 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Google.Apis.Books.v1" Version="1.45.0.1895" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +20,7 @@
 
   <ItemGroup>
     <Folder Include="AccountArea\Queries\" />
-    <Folder Include="Identity\Configuration\" />
+    <Folder Include="BooksArea\Commands\" />
     <Folder Include="UserFavoriteBookArea\Commands\" />
   </ItemGroup>
 

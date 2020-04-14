@@ -4,8 +4,6 @@ using Elibrary.Application.Common.Interfaces;
 using Elibrary.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,7 +36,9 @@ namespace Elibrary.Application.UserFavoriteBookArea.Queries.GetUserFavoriteBooks
                 _mapper = mapper;
             }
 
-            public async Task<UserFavoriteBooksViewModel> Handle(GetUserFavoriteBooksQuery request, CancellationToken cancellationToken)
+            public async Task<UserFavoriteBooksViewModel> Handle(
+                GetUserFavoriteBooksQuery request, 
+                CancellationToken cancellationToken)
             {
                 var viewModel = new UserFavoriteBooksViewModel();
 
