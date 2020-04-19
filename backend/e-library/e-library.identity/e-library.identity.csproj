@@ -15,8 +15,4 @@
     <ProjectReference Include="..\e-library.data\e-library.data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

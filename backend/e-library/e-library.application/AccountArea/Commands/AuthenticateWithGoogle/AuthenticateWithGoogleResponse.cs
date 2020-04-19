@@ -10,6 +10,7 @@ namespace Elibrary.Application.AccountArea.Commands.AuthenticateWithGoogle
         public AuthenticateWithGoogleResponse(string token, DateTime expires)
         {
             Token = token;
+
             Expires = expires;
         }
     }

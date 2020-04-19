@@ -5,7 +5,7 @@ namespace Elibrary.Application.Identity
 {
     public interface ITokenManager
     {
-        Task<GooglePayload> ValidateBearerTokenAsync(string token);
+        Task<GooglePayload> ValidateBearerTokenAsync(string authCode);
         ApplicationToken GenerateBearerTokenAsync(GooglePayload payload);
     }
 }

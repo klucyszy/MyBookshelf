@@ -18,6 +18,7 @@ namespace Elibrary.Api.Controllers
             return await Mediator.Send(new GetBooksQuery(CurrentUser.Id));
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         [Route("search")]
         public async Task<ActionResult<SearchBooksViewModel>> SearchBooks(

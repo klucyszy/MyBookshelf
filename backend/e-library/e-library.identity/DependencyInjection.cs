@@ -1,6 +1,10 @@
-﻿using elibrary.identity.Services;
+﻿using elibrary.identity.Google.OAuth2;
+using elibrary.identity.Services;
+using Elibrary.Application.GoogleBooksService.Interfaces;
 using Elibrary.Application.Identity;
 using Elibrary.Data.Context;
+using Google.Apis.Http;
+using Google.Apis.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -60,6 +64,8 @@ namespace elibrary.identity
                 });
 
             services.Configure<Configuration.IdentityOptions>(configuration.GetSection("Identity"));
+            services.AddScoped<IConfigurableHttpClientInitializer, GoogleHttpInitializer>();
+            services.AddScoped<IGoogleClientInitializer, GoogleClientInitializer>();
             services.AddScoped<ITokenManager, GoogleTokenManager>();
 
             return services;

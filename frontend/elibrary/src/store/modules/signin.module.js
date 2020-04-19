@@ -13,19 +13,17 @@ const getters = {
 const actions = {
     logIn(context) {
         this._vm.$gAuth
-        .signIn()
-        .then(GoogleUser => {
-            let response = GoogleUser.getAuthResponse();
-            context.commit('SET_USER_STATE', GoogleUser.getBasicProfile());
-
+        .getAuthCode()
+        .then(authCode => {
             this._vm.axios.post('/api/authorize/google', {
-                'token': response.id_token
+                'authCode': authCode
             })
             .then((res) => {
                 context.commit('SET_ID_TOKEN_STATE', res.data.token);
             })
             .catch((err) => {
                 console.log(err);
+                throw err;
             });
         })
         .catch(err => {

@@ -11,7 +11,7 @@ namespace Elibrary.Application.AccountArea.Commands.AuthenticateWithGoogle
 {
     public class AuthenticateWithGoogleCommand : IRequest<AuthenticateWithGoogleResponse>
     {
-        public string Token { get; set; }
+        public string AuthCode { get; set; }
 
         public class AuthenticateWithGoogleCommandHandler : IRequestHandler<AuthenticateWithGoogleCommand, AuthenticateWithGoogleResponse>
         {
@@ -28,7 +28,7 @@ namespace Elibrary.Application.AccountArea.Commands.AuthenticateWithGoogle
 
             public async Task<AuthenticateWithGoogleResponse> Handle(AuthenticateWithGoogleCommand request, CancellationToken cancellationToken)
             {
-                Common.Models.GooglePayload payload = await _tokenManager.ValidateBearerTokenAsync(request.Token);
+                Common.Models.GooglePayload payload = await _tokenManager.ValidateBearerTokenAsync(request.AuthCode);
                 await CreateUserIfNotExist(payload.UserIdentifier, payload.Email);
 
                 var token = _tokenManager.GenerateBearerTokenAsync(payload);

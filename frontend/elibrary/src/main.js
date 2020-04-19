@@ -16,6 +16,7 @@ Vue.use(vuetify, {
   iconfont: 'mdi'
 });
 
+console.log(googleAuth.gauthOptions.clientId)
 Vue.use(GAuth, googleAuth.gauthOptions);
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Elibrary.Application.GoogleBooksService.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Elibrary.Application.BooksApi
@@ -7,10 +8,7 @@ namespace Elibrary.Application.BooksApi
     {
         public static IServiceCollection AddBooksApi(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<Configuration.AppSettings>(configuration.GetSection("BooksApi"));
-
-            services.AddScoped<IGoogleBookApi, GoogleBookApi>();
-
+            services.AddScoped<IGoogleBooksService, GoogleBooksService>();
             return services;
         }
     }

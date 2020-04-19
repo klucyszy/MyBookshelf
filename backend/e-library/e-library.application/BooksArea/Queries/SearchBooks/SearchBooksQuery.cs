@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Elibrary.Application.BooksApi;
+using Elibrary.Application.GoogleBooksService.Interfaces;
 using Google.Apis.Books.v1.Data;
 using MediatR;
 
@@ -19,9 +20,9 @@ namespace Elibrary.Application.BooksArea.Queries.SearchBooks
 
         public class ISearchBooksQueryHandler : IRequestHandler<SearchBooksQuery, SearchBooksViewModel>
         {
-            private readonly IGoogleBookApi _googleBookApi;
+            private readonly IGoogleBooksService _googleBookApi;
 
-            public ISearchBooksQueryHandler(IGoogleBookApi googleBookApi)
+            public ISearchBooksQueryHandler(IGoogleBooksService googleBookApi)
             {
                 _googleBookApi = googleBookApi;
             }
