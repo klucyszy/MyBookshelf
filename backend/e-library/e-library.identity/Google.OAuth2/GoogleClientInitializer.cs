@@ -1,5 +1,5 @@
 ﻿using elibrary.identity.Configuration;
-using Elibrary.Application.GoogleBooksService.Interfaces;
+using Elibrary.Application.GoogleBooks.Interfaces;
 using Google.Apis.Http;
 using Google.Apis.Services;
 using Microsoft.Extensions.Options;

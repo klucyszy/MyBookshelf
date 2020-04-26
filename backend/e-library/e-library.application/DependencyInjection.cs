@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Elibrary.Application.BooksApi;
+using Elibrary.Application.GoogleBooks;
 using Elibrary.Application.Common.Mappings;
+using Elibrary.Application.GoogleBooks.Interfaces;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -10,11 +10,12 @@ namespace Elibrary.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplication(this IServiceCollection serviceCollection, IConfiguration configuration)
+        public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddMediatR(Assembly.GetExecutingAssembly());
             serviceCollection.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
-            serviceCollection.AddBooksApi(configuration);
+
+            serviceCollection.AddScoped<IGoogleBooksServiceFactory, GoogleBooksServiceFactory>();
 
             return serviceCollection;
         }

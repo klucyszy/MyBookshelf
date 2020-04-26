@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Elibrary.Application.BooksApi;
-using Elibrary.Application.GoogleBooksService.Interfaces;
+using Elibrary.Application.GoogleBooks.Interfaces;
 using Google.Apis.Books.v1.Data;
 using MediatR;
 
@@ -20,28 +19,28 @@ namespace Elibrary.Application.BooksArea.Queries.SearchBooks
 
         public class ISearchBooksQueryHandler : IRequestHandler<SearchBooksQuery, SearchBooksViewModel>
         {
-            private readonly IGoogleBooksService _googleBookApi;
+            private readonly IGoogleBooksServiceFactory _googleBookApi;
 
-            public ISearchBooksQueryHandler(IGoogleBooksService googleBookApi)
+            public ISearchBooksQueryHandler(IGoogleBooksServiceFactory googleBookApi)
             {
                 _googleBookApi = googleBookApi;
             }
 
             public async Task<SearchBooksViewModel> Handle(SearchBooksQuery request, CancellationToken cancellationToken)
             {
-                var viewModel = new SearchBooksViewModel();
-                Volumes volumes = await _googleBookApi.GetVolumes(request.Query);
+                //var viewModel = new SearchBooksViewModel();
+                //Volumes volumes = await _googleBookApi.GetVolumes(request.Query);
 
-                foreach (var item in volumes.Items)
-                {
-                    viewModel.Results.Add(new GoogleVolume
-                    {
-                        Title = item?.VolumeInfo?.Title,
-                        Subtitle = item?.VolumeInfo.Subtitle
-                    });
-                }
+                //foreach (var item in volumes.Items)
+                //{
+                //    viewModel.Results.Add(new GoogleVolume
+                //    {
+                //        Title = item?.VolumeInfo?.Title,
+                //        Subtitle = item?.VolumeInfo.Subtitle
+                //    });
+                //}
 
-                return viewModel;
+                return default;
             }
         }
 

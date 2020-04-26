@@ -81,7 +81,7 @@ namespace Elibrary.Api
             services.AddGoogleIdentity(Configuration);
 
             //Add application logic
-            services.AddApplication(Configuration);
+            services.AddApplication();
 
             services.AddOptions();
 

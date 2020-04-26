@@ -13,9 +13,9 @@ namespace Elibrary.Api.Controllers
     {
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
-        public async Task<ActionResult<GetBooksViewModel>> GetUserBooks()
+        public async Task<ActionResult<GetAllUserVolumesApiModel>> GetUserBooks()
         {
-            return await Mediator.Send(new GetBooksQuery(CurrentUser.Id));
+            return await Mediator.Send(new GetAllUserVolumesListQuery(CurrentUser.Id));
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]

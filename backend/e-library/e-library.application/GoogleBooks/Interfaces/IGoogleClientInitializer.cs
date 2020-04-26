@@ -1,6 +1,6 @@
 ﻿using Google.Apis.Services;
 
-namespace Elibrary.Application.GoogleBooksService.Interfaces
+namespace Elibrary.Application.GoogleBooks.Interfaces
 {
     public interface IGoogleClientInitializer
     {
