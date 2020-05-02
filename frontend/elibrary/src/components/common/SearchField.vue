@@ -1,5 +1,5 @@
 <template>
-    <v-sheet max-width="250">
+    <v-sheet :max-width="maxWidth">
         <v-text-field class="white"
           prepend-inner-icon="mdi-magnify"
           max-width="300"
@@ -17,6 +17,10 @@
 export default {
     name: 'SearchField',
     props: {
+        maxWidth: {
+            type: Number,
+            default: 1920
+        },
     },
     methods: {
     },

@@ -70,11 +70,11 @@ namespace Elibrary.Application.BooksArea.Queries.GetBooks
 
                         if (volumeInList != null)
                         {
-                            volumeInList.UserBookshelfs.Add(bookshelf.Id.Value.ToString());
+                            volumeInList.UserBookshelfs.Add(new BookshelfBase { Id = bookshelf.Id, Title = bookshelf.Title});
                         }
                         else
                         {
-                            volume.UserBookshelfs.Add(bookshelf.Id.Value.ToString());
+                            volume.UserBookshelfs.Add(new BookshelfBase { Id = bookshelf.Id, Title = bookshelf.Title });
                             allVolumes.Add(volume);
                         }
                     }

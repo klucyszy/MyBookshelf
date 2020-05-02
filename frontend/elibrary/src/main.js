@@ -3,6 +3,7 @@ import GAuth from 'vue-google-oauth2'
 import App from './App.vue';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueClipboard from 'vue-clipboard2'
 import '@mdi/font/css/materialdesignicons.css' ;
 import vuetify from './plugins/vuetify';
 import googleAuth from './plugins/googleAuth';
@@ -16,8 +17,9 @@ Vue.use(vuetify, {
   iconfont: 'mdi'
 });
 
-console.log(googleAuth.gauthOptions.clientId)
+console.log(googleAuth.gauthOptions.clientId);
 Vue.use(GAuth, googleAuth.gauthOptions);
+Vue.use(VueClipboard);
 
 
 axios.defaults.baseURL = 'https://localhost:44354/';

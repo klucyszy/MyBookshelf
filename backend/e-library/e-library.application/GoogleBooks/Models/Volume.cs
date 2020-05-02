@@ -8,7 +8,7 @@ namespace Elibrary.Application.GoogleBooks.Models
     {
         public Volume()
         {
-            UserBookshelfs = new List<string>();
+            UserBookshelfs = new List<BookshelfBase>();
         }
 
         public string Id { get; set; }
@@ -25,7 +25,7 @@ namespace Elibrary.Application.GoogleBooks.Models
 
         public IList<string> Categories { get; set; }
 
-        public IList<string> UserBookshelfs { get; set; }
+        public IList<BookshelfBase> UserBookshelfs { get; set; }
 
         public void Mapping(Profile profile)
         {

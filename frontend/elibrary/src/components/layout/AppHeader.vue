@@ -24,7 +24,6 @@
                 </v-toolbar-title>
             </router-link>
             <v-spacer class="hidden-sm-and-down"></v-spacer>
-            <search-field></search-field>
             <template v-for="(item, index) in pageItems">
                 <v-btn :key="index" icon class="mr-2 hidden-sm-and-down nav-menu router-link-color" :to="item.url" data-cy="menuBtn">
                     <v-icon>{{item.icon}}</v-icon>
@@ -54,13 +53,11 @@
 </template>
 
 <script>
-import SearchField from './../../components/common/SearchField'
 import  { mapGetters } from 'vuex'
 
 export default {
     name: 'AppHeader',
     components: {
-        SearchField
     },
     computed: mapGetters('signin', ['signedIn']),
     data() {

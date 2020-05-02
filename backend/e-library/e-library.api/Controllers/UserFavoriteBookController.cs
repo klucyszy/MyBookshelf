@@ -12,10 +12,10 @@ namespace Elibrary.Api.Controllers
     {
         private const int PageSize = 10;
 
-        [HttpGet]
-        public async Task<ActionResult<UserFavoriteBooksViewModel>> GetPageAsync(int pageNumber = 1, int? pageSize = PageSize)
-        {            
-            return await Mediator.Send(new GetUserFavoriteBooksQuery(CurrentUser.Id, pageNumber, pageSize.Value));
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<UserFavoriteBooksViewModel>> GetPageAsync(int pageNumber = 1, int? pageSize = PageSize)
+        //{            
+        //    return await Mediator.Send(new GetUserFavoriteBooksQuery(CurrentUser.Id, pageNumber, pageSize.Value));
+        //}
     }
 }
