@@ -1,10 +1,10 @@
 <template>
     <v-card outlined>
       <v-card-title class="mb-0 pb-2">Bookshelfs</v-card-title>
-      <v-checkbox class="mx-6 my-0 py-0" v-model="isAllCheckboxChecked" label="All"></v-checkbox>
-      <v-checkbox class="mx-6 my-0 py-0" v-for="bshf in bookshelfs" 
+      <v-checkbox dense class="mx-6 my-0 py-0" v-model="isAllCheckboxChecked" label="All"></v-checkbox>
+      <v-checkbox dense class="mx-6 my-0 py-0" v-for="bshf in bookshelfs" 
                   :key="bshf.id" 
-                  :label="`${bshf.name} (${bshf.items})`"
+                  :label="`${bshf.title} (${bshf.volumeCount})`"
                   :value="bshf"
                   v-model="selectedBookshelfs">
       </v-checkbox>
@@ -32,37 +32,32 @@ export default {
     }
   },
   created: function() {
-    this.selectedBookshelfs = this.bookshelfs;
+    this.loadCategories();
   },
   data: function() {
     return {
       isAllCheckboxChecked: true,
       selectedBookshelfs: [],
-      bookshelfs: [
-        {
-          id: "1",
-          name: "Reading",
-          items: 7,
-        },
-        {
-          id: "2",
-          name: "Favorites",
-          items: 3,
-        },
-        {
-          id: "3",
-          name: "Audiobooks",
-          items: 2
-        },
-        {
-          id: "4",
-          name: "To be read",
-          items: 12
-        }
-      ]
+      bookshelfs: []
   };
 },
   methods: {
+    loadCategories: function() {
+      this.axios.get('/api/bookshelfs', {
+        headers: {
+          Authorization: this.$store.state.signin.id_token
+        }
+      })
+      .then(res => {
+        if (res && res.data && Array.isArray(res.data.items)){
+          this.bookshelfs = res.data.items;
+          this.selectedBookshelfs = this.bookshelfs;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   }
 }
 </script>

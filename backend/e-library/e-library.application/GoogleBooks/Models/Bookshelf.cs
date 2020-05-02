@@ -1,4 +1,5 @@
-﻿using Elibrary.Application.Common.Mappings;
+﻿using AutoMapper;
+using Elibrary.Application.Common.Mappings;
 using System;
 
 namespace Elibrary.Application.GoogleBooks.Models
@@ -22,6 +23,12 @@ namespace Elibrary.Application.GoogleBooks.Models
 
         public DateTime? Updated { get; set; }
 
-        public int? VolumeCount { get; set; }
+        public int VolumeCount { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Google.Apis.Books.v1.Data.Bookshelf, Bookshelf>()
+                .ForMember(dest => dest.VolumeCount, opts => opts.MapFrom(src => src.VolumeCount ?? 0));
+        }
     }
 }

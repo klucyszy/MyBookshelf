@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     copyToken: function() {
-      let textToCopy = "Bearer " + this.token;
+      let textToCopy = this.token;
       this.$copyText(textToCopy).then(function (e) {
           alert('Copied')
           console.log(e)

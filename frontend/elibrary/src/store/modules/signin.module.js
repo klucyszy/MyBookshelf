@@ -19,7 +19,7 @@ const actions = {
                 'authCode': authCode
             })
             .then((res) => {
-                context.commit('SET_ID_TOKEN_STATE', res.data.token);
+                context.commit('SET_ID_TOKEN_STATE', "Bearer " + res.data.token);
             })
             .catch((err) => {
                 console.log(err);
