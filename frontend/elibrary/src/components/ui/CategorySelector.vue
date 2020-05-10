@@ -1,7 +1,15 @@
 <template>
     <v-card outlined>
-      <v-card-title class="mb-0 pb-2">Bookshelfs</v-card-title>
-      <v-checkbox dense class="mx-6 my-0 py-0" v-model="isAllCheckboxChecked" label="All"></v-checkbox>
+      <v-row>
+        <v-col>
+          <v-card-text class="card-title mb-0 pb-2">Bookshelfs</v-card-text>
+        </v-col>
+        <v-col class= "d-flex align-end justify-center">
+          <v-btn text x-small 
+            v-on:click=clearFilters()
+            class="card-button my-4">Clear</v-btn>
+        </v-col>
+      </v-row>
       <v-checkbox dense class="mx-6 my-0 py-0" v-for="bshf in bookshelfs" 
                   :key="bshf.id" 
                   :label="`${bshf.title} (${bshf.volumeCount})`"
@@ -16,21 +24,6 @@ export default {
   name: 'CategorySelector',
   components: {
   },
-  computed: {
-    isAnyCategoryChecked() {
-      return this.selectedBookshelfs.length > 0;
-    }
-  },
-  watch: {
-    isAllCheckboxChecked: function(newValue) {
-      if (newValue) {
-        this.selectedBookshelfs = this.bookshelfs;
-      }
-      else {
-        this.selectedBookshelfs = [];
-      }
-    }
-  },
   created: function() {
     this.loadCategories();
   },
@@ -42,6 +35,9 @@ export default {
   };
 },
   methods: {
+    clearFilters: function() {
+      this.selectedBookshelfs = [];
+    },
     loadCategories: function() {
       this.axios.get('/api/bookshelfs', {
         headers: {
@@ -51,7 +47,6 @@ export default {
       .then(res => {
         if (res && res.data && Array.isArray(res.data.items)){
           this.bookshelfs = res.data.items;
-          this.selectedBookshelfs = this.bookshelfs;
         }
       })
       .catch(err => {
@@ -63,5 +58,13 @@ export default {
 </script>
 
 <style scoped>
+  .card-title {
+    font-weight: bold;
+    font-size: larger;
+  }
 
+  .card-button {
+    color: grey;
+    text-decoration: underline;
+  }
 </style>

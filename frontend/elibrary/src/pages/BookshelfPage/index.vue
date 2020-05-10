@@ -12,7 +12,7 @@
           <category-selector></category-selector>
         </v-col>
         <v-col :xs="12" :md="8" :lg="9">
-          Main thing
+          <books-list></books-list>
         </v-col>
       </v-row>
     </v-col>
@@ -27,11 +27,14 @@
 <script>
 import SearchField from './../../components/common/SearchField';
 import CategorySelector from './../../components/ui/CategorySelector';
+import BooksList from './../../components/ui/BooksList';
+
 export default {
     name: 'Bookshelf',
     components: {
       SearchField,
-      CategorySelector
+      CategorySelector,
+      BooksList
     }
 };
 </script>

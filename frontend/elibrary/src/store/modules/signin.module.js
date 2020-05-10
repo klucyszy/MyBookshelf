@@ -20,17 +20,21 @@ const actions = {
             })
             .then((res) => {
                 context.commit('SET_ID_TOKEN_STATE', "Bearer " + res.data.token);
+                context.commit('SET_SIGN_IN_STATE', true);
+                context.commit('alert/alertSuccess', "You are authorized", {root: true})
             })
             .catch((err) => {
-                console.log(err);
-                throw err;
+                let errMessage = "Authorization failed: " + err; 
+                console.log(errMessage)
+                context.commit('SET_SIGN_IN_STATE', false);
+                context.commit('alert/alertError', errMessage, { root: true });
             });
         })
         .catch(err => {
-            console.log("Authorization failed: " + err)
-        })
-        .finally(() => {
-            context.commit('SET_SIGN_IN_STATE', this._vm.$gAuth.isAuthorized);
+            let errMessage = "Authorization failed: " + err; 
+            console.log(errMessage)
+            context.commit('SET_SIGN_IN_STATE', false);
+            context.commit('alert/alertError', errMessage, { root: true });
         });
     },
     logOut(context){
@@ -40,6 +44,8 @@ const actions = {
             context.commit('SET_USER_STATE', {});
             context.commit('SET_ID_TOKEN_STATE', null);
             context.commit('SET_SIGN_IN_STATE', false);
+
+            context.commit('alert/alertSuccess', "You are successfullt sign out", {root: true})
         })
         .catch(error => {
             console.log(error);

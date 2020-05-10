@@ -1,5 +1,5 @@
 <template>
-    <v-card shaped class="mx-3"
+    <v-card outlined class="mx-3"
             min-width="200" 
             max-width="200">
         
