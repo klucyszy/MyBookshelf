@@ -15,11 +15,13 @@ namespace Elibrary.Application.BooksArea.Queries.GetBooks
 {
     public class GetAllUserVolumesListQuery : IRequest<GetAllUserVolumesApiModel>
     {
-        public GetAllUserVolumesListQuery(string userId)
+        public GetAllUserVolumesListQuery(GetBooksQueryRequest query, string userId)
         {
+            Query = query;
             UserId = userId;
         }
 
+        public GetBooksQueryRequest Query { get; set; }
         public string UserId { get; set; }
 
         public class GetAllUserVolumesListHandler : IRequestHandler<GetAllUserVolumesListQuery, GetAllUserVolumesApiModel>
@@ -39,9 +41,14 @@ namespace Elibrary.Application.BooksArea.Queries.GetBooks
                 GetAllUserVolumesListQuery request, 
                 CancellationToken cancellationToken)
             {
-                GoogleData.Bookshelves allBookshelfs = await _booksService.Mylibrary.Bookshelves.List().ExecuteAsync();
-                IList<GoogleData.Bookshelf> bookshelfs = allBookshelfs.Items?.Where(x => x.VolumeCount > 0).ToList();
+                GoogleData.Bookshelves bookshelfsList = await _booksService.Mylibrary.Bookshelves.List().ExecuteAsync();
 
+
+                IList<GoogleData.Bookshelf> bookshelfs = bookshelfsList.Items ?? new List<GoogleData.Bookshelf>();
+
+                if (request.Query.BookshelfIds.Any())
+                    bookshelfs = bookshelfs.Where(x => request.Query.BookshelfIds.Contains(x.Id ?? -1)).ToList();
+                bookshelfs = bookshelfs.Where(x => x.VolumeCount > 0).ToList();
 
                 if (bookshelfs?.Count == 0)
                 {

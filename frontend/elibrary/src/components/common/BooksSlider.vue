@@ -39,7 +39,17 @@ export default {
                     Title: "Gettings Things Done",
                     Category: "Psychology",
                     IsFavorite: true,
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
+                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg'),
+                    Bookshelfs: [
+                        {
+                            Name: "My books",
+                            IsChecked: true
+                        },
+                        {
+                            Name: "To read",
+                            IsChecked: false
+                        }
+                    ]
                 },
                 {
                     Rate: 3,

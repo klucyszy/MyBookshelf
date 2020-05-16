@@ -20,16 +20,32 @@
                 size="18">
             </v-rating>
             <v-spacer></v-spacer>
-            <v-btn text icon v-on:click="toggleFavorite()">
+            <v-btn dense text icon class="mx-0 px-0" v-on:click="toggleFavorite()">
                 <v-icon v-if="Book.IsFavorite" color="red">mdi-heart</v-icon>
                 <v-icon v-else color="red">mdi-heart-outline</v-icon>
             </v-btn>
+            <v-menu icon open-on-hover class="mx-0 px-0">
+                <template v-slot:activator="{on}">
+                    <v-btn icon v-on="on">
+                        <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                </template>
+                <v-list dense min-width="150px">
+                    <v-list-item v-for="(shelf, index) in Book.Bookshelfs"
+                        v-on:click="toggleBookshelf(shelf)"
+                        :key="index">
+                        <v-list-item-title>{{shelf.Name}}</v-list-item-title>
+                        <v-spacer></v-spacer>
+                        <v-icon v-if="shelf.IsChecked">mdi-check</v-icon>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
-
+const clonedeep = require('lodash.clonedeep');
 
 export default {
     name: 'BookCard',
@@ -43,7 +59,13 @@ export default {
                     Author: "",
                     Title: "",
                     Category: "",
-                    ImageUrl: "#"   
+                    ImageUrl: "#",
+                    Bookshelfs: [
+                        {
+                            Name: "",
+                            IsChecked: false,
+                        }
+                    ]
                 }            
             }
         }
@@ -51,13 +73,45 @@ export default {
     methods: {
         rateUpdated: function(value){
             this.Book.Rate = value;
+            if (this.loadedBook.Rate !== this.Book.Rate){
+                this.updatedBook.Rate = value;
+            }
+            else{
+                delete this.updatedBook.Rate;
+            }
         },
         toggleFavorite: function() {
             this.Book.IsFavorite = !this.Book.IsFavorite;
+            if (this.loadedBook.IsFavorite !== this.Book.IsFavorite){
+                this.updatedBook.IsFavorite = this.Book.IsFavorite;
+            }
+            else{
+                delete this.updatedBook.IsFavorite;
+            }
+        },
+        toggleBookshelf: function(bookshelf) {
+            bookshelf.IsChecked = !bookshelf.IsChecked;
+            let loadedBookshelf = this.loadedBook.Bookshelfs.find(el => el.Name === bookshelf.Name);
+            if (loadedBookshelf.IsChecked !== bookshelf.IsChecked ){
+                this.updatedBook.Bookshelfs.push(bookshelf);
+            }
+            else {
+                let bookshelfs = this.updatedBook.Bookshelfs;
+                for (let i = 0; i < bookshelfs.length; i++)
+                    if (bookshelfs[i].Name === bookshelf.Name) {
+                        bookshelfs.splice(i,1);
+                        break;
+                }
+            }
+
         }
     },
     data() {
         return {
+            updatedBook: {
+                Bookshelfs: [],
+            },
+            loadedBook: {},
         };
     },
     computed: {
@@ -67,6 +121,9 @@ export default {
             else 
                 return this.Book.Title;
         }
+    },
+    mounted() {
+        this.loadedBook = clonedeep(this.Book);
     }
 };
 </script>
