@@ -1,6 +1,7 @@
 const state = {
     selectedCategories: [],
-    books: []
+    books: [],
+    categories: []
 };
 
 const getters = {
@@ -12,6 +13,7 @@ const getters = {
         return selectedCategoriesArray;
     },
     books: state => state.books,
+    categories: state => state.categories,
 };
 
 const actions = {
@@ -20,22 +22,32 @@ const actions = {
         context.dispatch('getBooks');
     },
     getBooks: function(context) {
-        
+        context.commit('loading/setLoading', true, {root: true});
+        const qs = require('qs');
+        let params = {};
+        let bookshelfIds = context.rootGetters['search/selectedCategoriesIds'];
+        if (bookshelfIds.length > 0)
+            params.BookshelfIds = bookshelfIds;
+
         this._vm.axios.get('/api/books', {
-            params: {
-                BookshelfIds: context.rootGetters['search/selectedCategoriesIds']  + ''
-            },
+            params: params,
             headers: {
                 Authorization: context.rootState.signin.id_token
+            },
+            paramsSerializer: function(params) {
+                return qs.stringify(params, {arrayFormat: 'repeat'})
             },
         })
         .then((res) => {
             if (res && res.data && Array.isArray(res.data.volumes)) {
                 context.commit('setBooks', res.data.volumes);
+                context.commit('loading/setLoading', false, {root: true});
             }
         })
         .catch((err) => {
             console.log(err);
+            context.commit('alert/alertError', err, { root: true });
+            context.commit('loading/setLoading', false, {root: true});
         })
     }
 };
@@ -47,6 +59,9 @@ const mutations = {
     },
     setBooks(state, books) {
         state.books = books;
+    },
+    setCategories(state, categories) {
+        state.categories = categories;
     }
 };
 

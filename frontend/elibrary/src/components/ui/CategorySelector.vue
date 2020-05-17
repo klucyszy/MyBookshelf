@@ -47,6 +47,7 @@ export default {
       .then(res => {
         if (res && res.data && Array.isArray(res.data.items)){
           this.bookshelfs = res.data.items;
+          this.$store.commit('search/setCategories', res.data.items);
         }
       })
       .catch(err => {

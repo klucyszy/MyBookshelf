@@ -31,12 +31,12 @@
                     </v-btn>
                 </template>
                 <v-list dense min-width="150px">
-                    <v-list-item v-for="(shelf, index) in Book.Bookshelfs"
+                    <v-list-item v-for="(shelf, index) in userBookshelfs"
                         v-on:click="toggleBookshelf(shelf)"
                         :key="index">
-                        <v-list-item-title>{{shelf.Name}}</v-list-item-title>
+                        <v-list-item-title>{{shelf.title}}</v-list-item-title>
                         <v-spacer></v-spacer>
-                        <v-icon v-if="shelf.IsChecked">mdi-check</v-icon>
+                        <v-icon v-if="shelf.isChecked">mdi-check</v-icon>
                     </v-list-item>
                 </v-list>
             </v-menu>
@@ -60,9 +60,10 @@ export default {
                     title: "",
                     Category: "",
                     ImageUrl: "#",
-                    Bookshelfs: [
+                    userBookshelfs: [
                         {
-                            Name: "",
+                            id: "",
+                            title: "",
                             IsChecked: false,
                         }
                     ]
@@ -90,19 +91,20 @@ export default {
             }
         },
         toggleBookshelf: function(bookshelf) {
-            bookshelf.IsChecked = !bookshelf.IsChecked;
-            let loadedBookshelf = this.loadedBook.Bookshelfs.find(el => el.Name === bookshelf.Name);
-            if (loadedBookshelf.IsChecked !== bookshelf.IsChecked ){
-                this.updatedBook.Bookshelfs.push(bookshelf);
-            }
-            else {
-                let bookshelfs = this.updatedBook.Bookshelfs;
-                for (let i = 0; i < bookshelfs.length; i++)
-                    if (bookshelfs[i].Name === bookshelf.Name) {
-                        bookshelfs.splice(i,1);
-                        break;
-                }
-            }
+            bookshelf.isChecked = !bookshelf.isChecked;
+            //TODO: Fix tracking changes
+            // let loadedBookshelf = this.loadedBook.userBookshelfs.find(el => el.id === bookshelf.id);
+            // if (loadedBookshelf.isChecked !== bookshelf.isChecked ){
+            //     this.updatedBook.userBookshelfs.push(bookshelf);
+            // }
+            // else {
+            //     let bookshelfs = this.updatedBook.userBookshelfs;
+            //     for (let i = 0; i < bookshelfs.length; i++)
+            //         if (bookshelfs[i].title === bookshelf.title) {
+            //             bookshelfs.splice(i,1);
+            //             break;
+            //     }
+            // }
 
         }
     },
@@ -131,6 +133,15 @@ export default {
                 return authors.substring(0, 20) + "..";
             else 
                 return authors;
+        },
+        userBookshelfs: function() {
+            let allBookshelfs = this.$store.state.search.categories;
+            let result = [];
+            for (var item of allBookshelfs) {
+                let inBookshelf = this.Book.userBookshelfs.filter(b => b.id === item.id).length > 0;
+                result.push({id: item.id, title: item.title, isChecked: inBookshelf});
+            }
+            return result;
         }
     },
     mounted() {
