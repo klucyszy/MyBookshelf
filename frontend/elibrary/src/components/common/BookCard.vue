@@ -9,7 +9,7 @@
 
         <div align="left" class="pl-4">
             <v-card-title class="pt-1 pb-0 pl-0">{{bookTitle}}</v-card-title>
-            <div class="subtitle-1"> {{Book.Author}} </div>
+            <div class="subtitle-1"> {{authors}} </div>
         </div>
         <v-card-actions class="pt-0">
             <v-rating :value="Book.Rate"
@@ -56,8 +56,8 @@ export default {
                 return {
                     Rate: 1,
                     IsFavorite: false,
-                    Author: "",
-                    Title: "",
+                    authors: [],
+                    title: "",
                     Category: "",
                     ImageUrl: "#",
                     Bookshelfs: [
@@ -116,10 +116,21 @@ export default {
     },
     computed: {
         bookTitle: function(){
-            if (this.Book.Title.length > 16)
-                return this.Book.Title.substring(0, 16) + "..";
+            if (this.Book.title.length > 14)
+                return this.Book.title.substring(0, 14) + "..";
             else 
-                return this.Book.Title;
+                return this.Book.title;
+        },
+        authors: function() {
+            let authors = "";
+            for(var i = 0; i < this.Book.authors.length; i++) {
+                authors = authors + " " + this.Book.authors[i];
+            }
+
+            if (authors.length > 20)
+                return authors.substring(0, 20) + "..";
+            else 
+                return authors;
         }
     },
     mounted() {

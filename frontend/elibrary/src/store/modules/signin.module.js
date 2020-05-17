@@ -12,6 +12,7 @@ const getters = {
 
 const actions = {
     logIn(context) {
+        context.commit('loading/setLoading', true, {root: true});
         this._vm.$gAuth
         .getAuthCode()
         .then(authCode => {
@@ -21,13 +22,15 @@ const actions = {
             .then((res) => {
                 context.commit('SET_ID_TOKEN_STATE', "Bearer " + res.data.token);
                 context.commit('SET_SIGN_IN_STATE', true);
-                context.commit('alert/alertSuccess', "You are authorized", {root: true})
+                context.commit('alert/alertSuccess', "You are authorized", {root: true});
+                context.commit('loading/setLoading', false, {root: true});
             })
             .catch((err) => {
                 let errMessage = "Authorization failed: " + err; 
                 console.log(errMessage)
                 context.commit('SET_SIGN_IN_STATE', false);
                 context.commit('alert/alertError', errMessage, { root: true });
+                context.commit('loading/setLoading', false, {root: true});
             });
         })
         .catch(err => {
@@ -35,9 +38,11 @@ const actions = {
             console.log(errMessage)
             context.commit('SET_SIGN_IN_STATE', false);
             context.commit('alert/alertError', errMessage, { root: true });
+            context.commit('loading/setLoading', false, {root: true});
         });
     },
     logOut(context){
+        context.commit('loading/setLoading', true, {root: true});
         this._vm.$gAuth
         .signOut()
         .then(() =>{
@@ -45,10 +50,12 @@ const actions = {
             context.commit('SET_ID_TOKEN_STATE', null);
             context.commit('SET_SIGN_IN_STATE', false);
 
-            context.commit('alert/alertSuccess', "You are successfullt sign out", {root: true})
+            context.commit('alert/alertSuccess', "You are successfullt sign out", {root: true});
+            context.commit('loading/setLoading', false, {root: true});
         })
         .catch(error => {
             console.log(error);
+            context.commit('loading/setLoading', false, {root: true});
           });
     },
 };

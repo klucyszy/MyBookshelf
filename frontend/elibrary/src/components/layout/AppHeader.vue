@@ -56,7 +56,7 @@
 import  { mapGetters } from 'vuex'
 
 export default {
-    name: 'AppHeader',
+    name: 'AppHeader',    
     components: {
     },
     computed: mapGetters('signin', ['signedIn']),

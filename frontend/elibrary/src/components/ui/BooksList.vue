@@ -16,71 +16,21 @@
 
 <script>
 import BookCard from './../common/BookCard';
-
 export default {
     name: 'BooksList',
     components: {
         BookCard
     },
-    data: function() {
-        return {
-            //books: []
-            books: [
-                                {
-                    Rate: 4,
-                    Author: "David Allen",
-                    Title: "Gettings Things Done",
-                    Category: "Psychology",
-                    IsFavorite: true,
-                    ImageUrl: require('./../../assets/getting-things-done-czyli-sztuka-bezstresowej-efektywnosci-wydanie-ii-srednie.jpg')
-                },
-                {
-                    Rate: 3,
-                    Author: "Daniel Kahneman",
-                    Title: "Pułapki Myślenia",
-                    Category: "Psychology",
-                    IsFavorite: false,
-                    ImageUrl: require('./../../assets/pulapki-myslenia-srednie.jpg')
-                },
-                {
-                    Rate: 4,
-                    Author: "Charles Duhigg",
-                    Title: "Siła nawyku",
-                    Category: "Psychology",
-                    IsFavorite: true,
-                    ImageUrl: require('./../../assets/sila-nawyku-srednie.jpg')
-                },
-                {
-                    Rate: 5,
-                    Author: "Name Surname",
-                    Title: "Book Title 1",
-                    Category: "Category 3",
-                    IsFavorite: false,
-                    ImageUrl: "https://via.placeholder.com/165"
-                },
-                {
-                    Rate: 5,
-                    Author: "Name Surname",
-                    Title: "Book Title 2",
-                    Category: "Category 2",
-                    IsFavorite: false,
-                    ImageUrl: "https://via.placeholder.com/165"
-                },
-                {
-                    Rate: 5,
-                    Author: "Name Surname",
-                    Title: "Book Title 3 long book name",
-                    Category: "Category 1",
-                    IsFavorite: false,
-                    ImageUrl: "https://via.placeholder.com/165"
-                }
-            ]
-        }
-    },
     computed: {
+        books: function() {
+            return this.$store.state.search.books;
+        },
         isAnyBook: function() {
             return this.books.length > 0;
         }
+    },
+    mounted() {
+        this.$store.dispatch('search/getBooks');
     }
 };
 </script>

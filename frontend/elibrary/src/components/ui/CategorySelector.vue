@@ -1,4 +1,4 @@
-<template>
+<template v-cloak>
     <v-card outlined>
       <v-row>
         <v-col>
@@ -30,8 +30,8 @@ export default {
   data: function() {
     return {
       isAllCheckboxChecked: true,
+      bookshelfs: [],
       selectedBookshelfs: [],
-      bookshelfs: []
   };
 },
   methods: {
@@ -52,6 +52,11 @@ export default {
       .catch(err => {
         console.log(err);
       })
+    }
+  },
+  watch: {
+    selectedBookshelfs: function(val) {
+      this.$store.dispatch('search/setCategories', val);
     }
   }
 }
