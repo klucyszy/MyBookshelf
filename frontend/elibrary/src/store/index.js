@@ -17,6 +17,7 @@ export default new Vuex.Store({
     search
   },
   plugins: [createPersistedState({
-    paths: ['signin']
+    paths: ['signin'],
+    
   })],
 })

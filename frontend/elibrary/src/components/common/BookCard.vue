@@ -1,16 +1,22 @@
 <template>
+    <v-hover
+        v-slot:default="{ hover }"
+        open-delay="100"
+    >
     <v-card outlined class="mx-3"
-            min-width="200" 
-            max-width="200">
-        
+            :elevation="hover ? 8 : 2"
+            min-width="256" 
+            max-width="256">            
+        <book-details v-model="showDetails" :book-id="Book.id" />
         <v-img :src=Book.ImageUrl
-            height="165px">
+            v-on:click="toggleDetails()"
+            min-height="165px">
         </v-img>
 
         <div align="left" class="pl-4">
-            <v-card-title class="pt-1 pb-0 pl-0">{{bookTitle}}</v-card-title>
+            <v-card-title v-on:click="showDetails !=showDetails" class="pt-1 pb-0 pl-0">{{bookTitle}}</v-card-title>
             <div class="subtitle-1"> {{authors}} </div>
-        </div>
+        </div>     
         <v-card-actions class="pt-0">
             <v-rating :value="Book.Rate"
                 v-on:input="rateUpdated($event)"
@@ -42,13 +48,18 @@
             </v-menu>
         </v-card-actions>
     </v-card>
+    </v-hover>
 </template>
 
 <script>
 const clonedeep = require('lodash.clonedeep');
+import BookDetails from './../ui/BookDetails';
 
 export default {
     name: 'BookCard',
+    components: {
+        BookDetails,
+    },
     props: {
         Book: {
             type: Object,
@@ -69,9 +80,12 @@ export default {
                     ]
                 }            
             }
-        }
+        },
     },
     methods: {
+        toggleDetails: function() {
+            this.showDetails = !this.showDetails;
+        },
         rateUpdated: function(value){
             this.Book.Rate = value;
             if (this.loadedBook.Rate !== this.Book.Rate){
@@ -114,6 +128,7 @@ export default {
                 Bookshelfs: [],
             },
             loadedBook: {},
+            showDetails: false,
         };
     },
     computed: {
@@ -124,7 +139,7 @@ export default {
                 return this.Book.title;
         },
         authors: function() {
-            let authors = "";
+            let authors = "-";
             for(var i = 0; i < this.Book.authors.length; i++) {
                 authors = authors + " " + this.Book.authors[i];
             }

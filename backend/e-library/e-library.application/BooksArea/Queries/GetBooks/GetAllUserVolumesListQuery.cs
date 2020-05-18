@@ -43,7 +43,6 @@ namespace Elibrary.Application.BooksArea.Queries.GetBooks
             {
                 GoogleData.Bookshelves bookshelfsList = await _booksService.Mylibrary.Bookshelves.List().ExecuteAsync();
 
-
                 IList<GoogleData.Bookshelf> bookshelfs = bookshelfsList.Items ?? new List<GoogleData.Bookshelf>();
 
                 if (request.Query.BookshelfIds.Any())

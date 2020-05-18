@@ -21,7 +21,7 @@ namespace Elibrary.Application.GoogleBooks.Models
 
         public IList<string> Authors { get; set; }
 
-        public double? AverageRating { get; set; }
+        public double? AverageRating { get; set; }  
 
         public IList<string> Categories { get; set; }
 
