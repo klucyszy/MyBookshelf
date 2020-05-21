@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Elibrary.Application.Common.Mappings;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Elibrary.Application.GoogleBooks.Models
 {
@@ -25,6 +26,10 @@ namespace Elibrary.Application.GoogleBooks.Models
 
         public IList<string> Categories { get; set; }
 
+        public ImageLinks ImageLinks { get; set; }
+
+        public bool IsFavorite => UserBookshelfs.Any(x => x.Title == "Favorites");
+
         public IList<BookshelfBase> UserBookshelfs { get; set; }
 
         public void Mapping(Profile profile)
@@ -36,6 +41,7 @@ namespace Elibrary.Application.GoogleBooks.Models
                 .ForMember(dest => dest.Authors, opts => opts.MapFrom(src => src.VolumeInfo.Authors))
                 .ForMember(dest => dest.AverageRating, opts => opts.MapFrom(src => src.VolumeInfo.AverageRating))
                 .ForMember(dest => dest.Categories, opts => opts.MapFrom(src => src.VolumeInfo.Categories))
+                .ForMember(dest => dest.ImageLinks, opts => opts.MapFrom(src => src.VolumeInfo.ImageLinks))
                 .ForMember(dest => dest.UserBookshelfs, opts => opts.Ignore());
         }
     }

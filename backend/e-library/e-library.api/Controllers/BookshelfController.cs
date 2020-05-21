@@ -17,6 +17,24 @@ namespace Elibrary.Api.Controllers
             return await Mediator.Send(new GetBookshelfsListQuery());
         }
 
+        [HttpGet("favorites")]
+        public async Task<ActionResult<GetBookshelfsApiListModel>> GetUserFavoriteBookshelfs()
+        {
+            return Ok();
+        }
+
+        [HttpPost("favorites/{bookshelfId}")]
+        public async Task<ActionResult<GetBookshelfsApiListModel>> AddUserFavoriteBookshelf(string bookshelfId)
+        {
+            return Ok();
+        }
+
+        [HttpDelete("favorites/{bookshelfId}")]
+        public async Task<ActionResult<GetBookshelfsApiListModel>> RemoveUserFavoriteBookshelf(string bookshelfId)
+        {
+            return Ok();
+        }
+
         [HttpGet]
         [Route("{bookshelfId}")]
         public async Task<ActionResult<GetBookshelfApiModel>> GetBookshelf(string bookshelfId)

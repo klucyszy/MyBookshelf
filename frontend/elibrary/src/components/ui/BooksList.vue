@@ -4,7 +4,10 @@
             <v-col v-for="(book, index) in books"
                 :key="index"
                 cols="12"
-                md="3">
+                sm="12"
+                md="5"
+                lg="3"
+                xl="2">
                 <book-card :book="book"></book-card>
             </v-col>
         </v-row>

@@ -8,9 +8,11 @@
             min-width="256" 
             max-width="256">            
         <book-details v-model="showDetails" :book-id="Book.id" />
-        <v-img :src=Book.ImageUrl
+        <v-img :src="imageUrl"
             v-on:click="toggleDetails()"
-            min-height="165px">
+            contain
+            min-height="165px"
+            max-height="165px">
         </v-img>
 
         <div align="left" class="pl-4">
@@ -18,8 +20,7 @@
             <div class="subtitle-1"> {{authors}} </div>
         </div>     
         <v-card-actions class="pt-0">
-            <v-rating :value="Book.Rate"
-                v-on:input="rateUpdated($event)"
+            <v-rating :value="Book.averageRating"               
                 color="amber"
                 background-color="amber"
                 dense
@@ -27,7 +28,7 @@
             </v-rating>
             <v-spacer></v-spacer>
             <v-btn dense text icon class="mx-0 px-0" v-on:click="toggleFavorite()">
-                <v-icon v-if="Book.IsFavorite" color="red">mdi-heart</v-icon>
+                <v-icon v-if="Book.isFavorite" color="red">mdi-heart</v-icon>
                 <v-icon v-else color="red">mdi-heart-outline</v-icon>
             </v-btn>
             <v-menu icon open-on-hover class="mx-0 px-0">
@@ -65,12 +66,12 @@ export default {
             type: Object,
             default: function() {
                 return {
-                    Rate: 1,
-                    IsFavorite: false,
+                    averageRating: 1,
+                    isFavorite: false,
                     authors: [],
                     title: "",
                     Category: "",
-                    ImageUrl: "#",
+                    imageUrl: "#",
                     userBookshelfs: [
                         {
                             id: "",
@@ -96,12 +97,12 @@ export default {
             }
         },
         toggleFavorite: function() {
-            this.Book.IsFavorite = !this.Book.IsFavorite;
-            if (this.loadedBook.IsFavorite !== this.Book.IsFavorite){
-                this.updatedBook.IsFavorite = this.Book.IsFavorite;
+            this.Book.isFavorite = !this.Book.isFavorite;
+            if (this.loadedBook.isFavorite !== this.Book.isFavorite){
+                this.updatedBook.isFavorite = this.Book.isFavorite;
             }
             else{
-                delete this.updatedBook.IsFavorite;
+                delete this.updatedBook.isFavorite;
             }
         },
         toggleBookshelf: function(bookshelf) {
@@ -132,16 +133,21 @@ export default {
         };
     },
     computed: {
+        imageUrl: function() {
+            return this.Book.imageLinks.smallThumbnail;
+        },
         bookTitle: function(){
-            if (this.Book.title.length > 14)
-                return this.Book.title.substring(0, 14) + "..";
+            if (this.Book.title.length > 20)
+                return this.Book.title.substring(0, 20) + "..";
             else 
                 return this.Book.title;
         },
         authors: function() {
-            let authors = "-";
+            let authors = "";
+            if (this.Book.authors.length == 0)
+                authors = "-";
             for(var i = 0; i < this.Book.authors.length; i++) {
-                authors = authors + " " + this.Book.authors[i];
+                    authors = authors + " " + this.Book.authors[i];
             }
 
             if (authors.length > 20)

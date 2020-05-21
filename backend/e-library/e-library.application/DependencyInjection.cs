@@ -5,6 +5,7 @@ using Elibrary.Application.GoogleBooks.Interfaces;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Elibrary.Application.GoogleBooks.Repositories;
 
 namespace Elibrary.Application
 {
@@ -16,6 +17,7 @@ namespace Elibrary.Application
             serviceCollection.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 
             serviceCollection.AddScoped<IGoogleBooksServiceFactory, GoogleBooksServiceFactory>();
+            serviceCollection.AddScoped<IGoogleBooksRepository, GoogleBooksRepository>();
 
             return serviceCollection;
         }

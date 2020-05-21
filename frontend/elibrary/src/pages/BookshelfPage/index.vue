@@ -8,10 +8,10 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col :xs="12" :md="4" :lg="3">
+        <v-col :xs="12" :md="4" :lg="2">
           <category-selector></category-selector>
         </v-col>
-        <v-col :xs="12" :md="8" :lg="9">
+        <v-col :xs="12" :md="8" :lg="10">
           <books-list></books-list>
         </v-col>
       </v-row>
