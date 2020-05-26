@@ -6,6 +6,6 @@ namespace Elibrary.Application.GoogleBooks.Interfaces
 {
     public interface IGoogleBooksRepository
     {
-        Task<IEnumerable<Volume>> GetBooks(IEnumerable<int> bookshelfsIds);
+        Task<IEnumerable<Volume>> GetBooks(List<int> bookshelfsIds);
     }
 }

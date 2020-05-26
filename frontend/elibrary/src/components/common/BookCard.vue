@@ -20,7 +20,7 @@
             <div class="subtitle-1"> {{authors}} </div>
         </div>     
         <v-card-actions class="pt-0">
-            <v-rating :value="Book.averageRating"               
+            <v-rating :value="bookRating"               
                 color="amber"
                 background-color="amber"
                 dense
@@ -78,7 +78,11 @@ export default {
                             title: "",
                             IsChecked: false,
                         }
-                    ]
+                    ],
+                    review: {
+                        content: "",
+                        rating: 0
+                    }
                 }            
             }
         },
@@ -133,6 +137,12 @@ export default {
         };
     },
     computed: {
+        bookRating: function() {
+            if (this.Book.review !== null) 
+                return this.Book.review.rating;
+            else 
+                return 0;
+        },
         imageUrl: function() {
             return this.Book.imageLinks.smallThumbnail;
         },

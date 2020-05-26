@@ -9,6 +9,9 @@ using Elibrary.Api.Utils.Redis;
 using Elibrary.Data;
 using elibrary.identity;
 using Elibrary.Application;
+using System.Reflection;
+using System.IO;
+using System;
 
 namespace Elibrary.Api
 {
@@ -70,8 +73,11 @@ namespace Elibrary.Api
 
                     }
                 });
-
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
+            services.AddSwaggerGenNewtonsoftSupport();
 
 
             //Add database
@@ -85,7 +91,12 @@ namespace Elibrary.Api
 
             services.AddOptions();
 
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                        options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    });
 
             services.AddHttpContextAccessor();
 

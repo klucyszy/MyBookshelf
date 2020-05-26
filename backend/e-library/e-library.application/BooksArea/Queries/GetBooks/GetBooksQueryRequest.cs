@@ -9,6 +9,6 @@ namespace Elibrary.Application.BooksArea.Queries.GetBooks
             BookshelfIds = new List<int>();
         }
 
-        public IList<int> BookshelfIds { get; set; }
+        public List<int> BookshelfIds { get; set; }
     }
 }
