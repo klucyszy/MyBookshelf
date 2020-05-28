@@ -2,12 +2,17 @@
 This is a concept of a place where you can create your virtual bookshelf. In the bookshelf you will have several selfs available.
 Features:
  - store your books in several bookshelf
+ - add comments to book, share your comments, rate books
  - enable in easy way to look around your books, move them between bookshelfs
+ - My Bookshelf will be integrated with Google Books.
  
-Plan:
+Plans:
  - share your bookshelfs with your friends
- - integrate with another bookshelf store like LubimyCzytac.pl, Audioteka
 
 # Technology Stack
-I've started this project to learn .NET Core 3, CQRS and Vue. I'm trying to use there as frameworks, patterns and libraries as I can.
 
+Backend:
+.NET Core 3 Web API, Swagger, CQRS, (solution based on Clean Architecture: https://github.com/jasontaylordev/CleanArchitecture)
+
+Frontend:
+Vue 3, Vuex, Axios
