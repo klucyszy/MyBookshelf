@@ -16,3 +16,9 @@ Backend:
 
 Frontend:
 Vue 3, Vuex, Axios
+
+# Screenshots
+
+Bookshelf page
+
+![alt text](https://github.com/klucyszy/MyBookshelf/blob/master/docs/appimages/bookshelf-page.png?raw=true)
