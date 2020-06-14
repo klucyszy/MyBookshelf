@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Elibrary.Application.AccountArea.Commands.AuthenticateWithGoogle
 {
-    public class AuthenticateWithGoogleCommand : IRequest<AuthenticateWithGoogleResponse>
+    public class AuthenticateWithGoogleCommand : IRequest<AuthenticateWithGoogleApiModel>
     {
         public string AuthCode { get; set; }
 
-        public class AuthenticateWithGoogleCommandHandler : IRequestHandler<AuthenticateWithGoogleCommand, AuthenticateWithGoogleResponse>
+        public class AuthenticateWithGoogleCommandHandler : IRequestHandler<AuthenticateWithGoogleCommand, AuthenticateWithGoogleApiModel>
         {
             private readonly IApplicationDbContext _context;
             private readonly ITokenManager _tokenManager;
@@ -26,14 +26,14 @@ namespace Elibrary.Application.AccountArea.Commands.AuthenticateWithGoogle
                 _tokenManager = tokenManager;
             }
 
-            public async Task<AuthenticateWithGoogleResponse> Handle(AuthenticateWithGoogleCommand request, CancellationToken cancellationToken)
+            public async Task<AuthenticateWithGoogleApiModel> Handle(AuthenticateWithGoogleCommand request, CancellationToken cancellationToken)
             {
                 Common.Models.GooglePayload payload = await _tokenManager.ValidateBearerTokenAsync(request.AuthCode);
                 await CreateUserIfNotExist(payload.UserIdentifier, payload.Email);
 
                 var token = _tokenManager.GenerateBearerTokenAsync(payload);
 
-                return new AuthenticateWithGoogleResponse(token.Token, token.Expires);
+                return new AuthenticateWithGoogleApiModel(token.Token, token.Expires);
             }
 
             private async Task CreateUserIfNotExist(string uid, string email)

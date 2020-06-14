@@ -138,7 +138,7 @@ export default {
     },
     computed: {
         bookRating: function() {
-            if (this.Book.review !== null) 
+            if (this.Book.review) 
                 return this.Book.review.rating;
             else 
                 return 0;

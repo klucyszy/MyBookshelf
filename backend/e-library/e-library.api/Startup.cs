@@ -121,7 +121,7 @@ namespace Elibrary.Api
             {
                 c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "e-library v1.0 API");
             });
-            app.UseApiModel();
+            //app.UseApiModel();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

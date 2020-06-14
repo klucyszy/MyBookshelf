@@ -25,20 +25,20 @@ namespace Elibrary.Api.Middleware
         public ApiModelTransformerMiddleware(RequestDelegate next)
         {
             _next = next;
-            _memoryStream = new MemoryStream();
         }
 
         public void Dispose()
         {
             if (_memoryStream != null)
-                _memoryStream.Dispose();
+                _memoryStream.Close();
         }
 
         public async Task Invoke(HttpContext httpContext)
         {
             Stream originalBody = httpContext.Response.Body;
+            _memoryStream = new MemoryStream();
             httpContext.Response.Body = _memoryStream;
-            
+
             await _next(httpContext);
 
             if (httpContext.Response.StatusCode == 401 || httpContext.Response.StatusCode == 403)

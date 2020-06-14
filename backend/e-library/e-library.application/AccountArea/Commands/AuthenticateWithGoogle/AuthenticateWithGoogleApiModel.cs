@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Elibrary.Application.Common.Models;
+using System;
 
 namespace Elibrary.Application.AccountArea.Commands.AuthenticateWithGoogle
 {
-    public class AuthenticateWithGoogleResponse
+    public class AuthenticateWithGoogleApiModel : ApiModel
     {
         public string Token { get; set; }
         public DateTime Expires { get; set; }
 
-        public AuthenticateWithGoogleResponse(string token, DateTime expires)
+        public AuthenticateWithGoogleApiModel(string token, DateTime expires)
         {
             Token = token;
 

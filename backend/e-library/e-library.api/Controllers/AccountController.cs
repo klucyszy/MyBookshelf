@@ -10,7 +10,7 @@ namespace Elibrary.Api.Controllers
     {
         [HttpPost]
         [Route("google")]
-        public async Task<ActionResult<AuthenticateWithGoogleResponse>> LoginWithGoogle([FromBody] AuthenticateWithGoogleCommand request)
+        public async Task<ActionResult<AuthenticateWithGoogleApiModel>> LoginWithGoogle([FromBody] AuthenticateWithGoogleCommand request)
         {
             return await Mediator.Send(request);
         }

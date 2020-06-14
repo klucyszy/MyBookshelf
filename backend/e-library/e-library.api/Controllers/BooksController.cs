@@ -18,13 +18,13 @@ namespace Elibrary.Api.Controllers
             return await Mediator.Send(new GetAllUserVolumesListQuery(request, CurrentUser.Id));
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet]
-        [Route("search")]
-        public async Task<ActionResult<SearchBooksViewModel>> SearchBooks(
-            [Required, MinLength(3)] string query = null)
-        {
-            return await Mediator.Send(new SearchBooksQuery(CurrentUser.Id, query));
-        }
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        //[HttpGet]
+        //[Route("search")]
+        //public async Task<ActionResult<SearchBooksViewModel>> SearchBooks(
+        //    [Required, MinLength(3)] string query = null)
+        //{
+        //    return await Mediator.Send(new SearchBooksQuery(CurrentUser.Id, query));
+        //}
     }
 }
