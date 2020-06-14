@@ -13,12 +13,9 @@ namespace Elibrary.Data.Context
     public class ELibraryContext : DbContext, IApplicationDbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Book> Books { get; set; }
-        public DbSet<BookOnLoan> BooksOnLoan { get; set; }
-        public DbSet<UserFavoriteBook> UserFavoriteBooks { get; set; }
+        public DbSet<Bookshelf> FavoriteBookshelves { get; set; }
 
         public ELibraryContext() { }
-
         public ELibraryContext(DbContextOptions<ELibraryContext> opts)
             : base(opts)
         {           

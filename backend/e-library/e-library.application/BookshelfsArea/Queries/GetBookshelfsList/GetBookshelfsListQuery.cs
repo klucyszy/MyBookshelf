@@ -12,36 +12,44 @@ using System.Runtime.Serialization;
 using System.Linq;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json.Converters;
+using Elibrary.Application.Common.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Elibrary.Application.BookshelfsArea.Queries.GetBookshelfsList
 {
     public class GetBookshelfsListQuery : IRequest<GetBookshelfsApiListModel>
     {
-        public GetBookshelfsListQuery(BookshelfsOption bookshelfOptions)
+        public GetBookshelfsListQuery(string userId, BookshelfsOption bookshelfOptions)
         {
             BookshelfOptions = bookshelfOptions;
+            UserId = userId;
         }
 
         public BookshelfsOption BookshelfOptions { get; set; }
+        public string UserId { get; set; }
 
         public class GetBookshelfsQueryHandler : IRequestHandler<GetBookshelfsListQuery, GetBookshelfsApiListModel>
         {
             private readonly BooksService _booksService;
+            private readonly IApplicationDbContext _context;
             private readonly IMapper _mapper;
 
             public GetBookshelfsQueryHandler(
                 IGoogleBooksServiceFactory googleBooksServiceFactory,
+                IApplicationDbContext context,
                 IMapper mapper)
             {
                 _booksService = googleBooksServiceFactory.GetBooksService();
+                _context = context;
                 _mapper = mapper;
             }
 
             public async Task<GetBookshelfsApiListModel> Handle(GetBookshelfsListQuery request, CancellationToken cancellationToken)
             {
-                GoogleData.Bookshelves googleBookshelfs = await _booksService.Mylibrary.Bookshelves.List().ExecuteAsync();
+                GoogleData.Bookshelves googleBookshelves = await _booksService.Mylibrary.Bookshelves.List().ExecuteAsync();
+                googleBookshelves.Items = googleBookshelves.Items.Where(x => x.Id.HasValue).ToList();
 
-                if (googleBookshelfs == null)
+                if (googleBookshelves == null)
                 {
                     return ApiModel.NotFound<GetBookshelfsApiListModel>();
                 }
@@ -49,29 +57,32 @@ namespace Elibrary.Application.BookshelfsArea.Queries.GetBookshelfsList
                 switch (request.BookshelfOptions)
                 {
                     case BookshelfsOption.Base:
-                        googleBookshelfs.Items = googleBookshelfs.Items.Where(x => x.Id < 5).ToList();
+                        googleBookshelves.Items = googleBookshelves.Items.Where(x => x.Id < 5).ToList();
                         break;
                     case BookshelfsOption.Custom:
-                        googleBookshelfs.Items = googleBookshelfs.Items.Where(x => x.Id > 9).ToList();
+                        googleBookshelves.Items = googleBookshelves.Items.Where(x => x.Id > 9).ToList();
                         break;
                     case BookshelfsOption.BaseAndCustom:
-                        googleBookshelfs.Items = googleBookshelfs.Items.Where(x => x.Id < 5 || x.Id > 9).ToList();
+                        googleBookshelves.Items = googleBookshelves.Items.Where(x => x.Id < 5 || x.Id > 9).ToList();
                         break;
                     case BookshelfsOption.Others:
-                        googleBookshelfs.Items = googleBookshelfs.Items.Where(x => x.Id >= 5 || x.Id <= 9).ToList();
+                        googleBookshelves.Items = googleBookshelves.Items.Where(x => x.Id >= 5 || x.Id <= 9).ToList();
                         break;
                     case BookshelfsOption.Favorites:
-                        googleBookshelfs.Items = new List<GoogleData.Bookshelf> { };
+                        var favoriteBookshelves = await _context.FavoriteBookshelves
+                            .Where(x => x.UserId == request.UserId)
+                            .Select(x => x.BookshelfId)
+                            .ToListAsync();
+                        googleBookshelves.Items = googleBookshelves.Items
+                            .Where(x => favoriteBookshelves.Contains(x.Id.ToString())).ToList();
                         break;
                     case BookshelfsOption.All:
                     default:
                         break;
                 }
 
-
-
                 IEnumerable<Bookshelf> bookshelfs = _mapper
-                    .Map<IEnumerable<GoogleData.Bookshelf>, IEnumerable<Bookshelf>>(googleBookshelfs.Items);
+                    .Map<IEnumerable<GoogleData.Bookshelf>, IEnumerable<Bookshelf>>(googleBookshelves.Items);
 
                 return new GetBookshelfsApiListModel(bookshelfs);
             }

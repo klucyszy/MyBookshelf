@@ -21,8 +21,6 @@
   <ItemGroup>
     <Folder Include="AccountArea\Queries\" />
     <Folder Include="BooksArea\Commands\" />
-    <Folder Include="BookshelfsArea\Command\" />
-    <Folder Include="UserFavoriteBookArea\Commands\" />
   </ItemGroup>
 
 </Project>

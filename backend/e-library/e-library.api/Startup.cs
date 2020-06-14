@@ -12,6 +12,7 @@ using Elibrary.Application;
 using System.Reflection;
 using System.IO;
 using System;
+using Elibrary.Api.Middleware;
 
 namespace Elibrary.Api
 {
@@ -112,23 +113,17 @@ namespace Elibrary.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(CorsBasicPolicy);
-
             app.UseHttpsRedirection();
-
+            app.UseRouting();
+            app.UseCors(CorsBasicPolicy);           
             app.UseSwagger();
-
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "e-library v1.0 API");
             });
-
-            app.UseRouting();
-
+            app.UseApiModel();
             app.UseAuthentication();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

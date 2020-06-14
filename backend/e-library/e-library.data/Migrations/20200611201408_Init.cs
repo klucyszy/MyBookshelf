@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Elibrary.Data.Migrations
 {
-    public partial class InitDatabase : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Books",
+                name: "Book",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -17,14 +17,28 @@ namespace Elibrary.Data.Migrations
                     CreateDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(nullable: true),
                     UpdateDate = table.Column<DateTime>(nullable: true),
-                    ISBN = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: false),
-                    Author = table.Column<string>(nullable: false),
+                    ISBN = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Author = table.Column<string>(nullable: true),
                     Category = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.Id);
+                    table.PrimaryKey("PK_Book", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FavoriteBookshelves",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    BookshelfId = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteBookshelves", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +60,7 @@ namespace Elibrary.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BooksOnLoan",
+                name: "BookOnLoan",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -64,15 +78,15 @@ namespace Elibrary.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BooksOnLoan", x => x.Id);
+                    table.PrimaryKey("PK_BookOnLoan", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BooksOnLoan_Books_BookId",
+                        name: "FK_BookOnLoan_Book_BookId",
                         column: x => x.BookId,
-                        principalTable: "Books",
+                        principalTable: "Book",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BooksOnLoan_Users_UserId",
+                        name: "FK_BookOnLoan_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -80,7 +94,7 @@ namespace Elibrary.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserFavoriteBooks",
+                name: "UserFavoriteBook",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -90,21 +104,21 @@ namespace Elibrary.Data.Migrations
                     UpdatedBy = table.Column<string>(nullable: true),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     Rate = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(maxLength: 512, nullable: true),
+                    Comment = table.Column<string>(nullable: true),
                     BookId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserFavoriteBooks", x => x.Id);
+                    table.PrimaryKey("PK_UserFavoriteBook", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserFavoriteBooks_Books_BookId",
+                        name: "FK_UserFavoriteBook_Book_BookId",
                         column: x => x.BookId,
-                        principalTable: "Books",
+                        principalTable: "Book",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserFavoriteBooks_Users_UserId",
+                        name: "FK_UserFavoriteBook_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -114,31 +128,26 @@ namespace Elibrary.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "CreateDate", "CreatedBy", "Login", "UpdateDate", "UpdatedBy", "UserIdentifier" },
-                values: new object[] { 1, new DateTime(2020, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin", "testUser", null, null, "testId" });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "CreateDate", "CreatedBy", "Login", "UpdateDate", "UpdatedBy", "UserIdentifier" },
-                values: new object[] { 2, new DateTime(2020, 3, 25, 12, 12, 12, 0, DateTimeKind.Unspecified), "admin", "klucyszyn1995@gmail.com", null, null, "106825456884718575110" });
+                values: new object[] { 1, new DateTime(2020, 3, 25, 12, 12, 12, 0, DateTimeKind.Unspecified), "admin", "klucyszyn1995@gmail.com", null, null, "106825456884718575110" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BooksOnLoan_BookId",
-                table: "BooksOnLoan",
+                name: "IX_BookOnLoan_BookId",
+                table: "BookOnLoan",
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BooksOnLoan_UserId",
-                table: "BooksOnLoan",
+                name: "IX_BookOnLoan_UserId",
+                table: "BookOnLoan",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFavoriteBooks_BookId",
-                table: "UserFavoriteBooks",
+                name: "IX_UserFavoriteBook_BookId",
+                table: "UserFavoriteBook",
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFavoriteBooks_UserId",
-                table: "UserFavoriteBooks",
+                name: "IX_UserFavoriteBook_UserId",
+                table: "UserFavoriteBook",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -151,13 +160,16 @@ namespace Elibrary.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BooksOnLoan");
+                name: "BookOnLoan");
 
             migrationBuilder.DropTable(
-                name: "UserFavoriteBooks");
+                name: "FavoriteBookshelves");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "UserFavoriteBook");
+
+            migrationBuilder.DropTable(
+                name: "Book");
 
             migrationBuilder.DropTable(
                 name: "Users");

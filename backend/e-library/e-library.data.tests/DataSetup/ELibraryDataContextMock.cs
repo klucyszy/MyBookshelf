@@ -54,7 +54,6 @@ namespace e_library.Data.tests.DataSetup
                 .Create();
 
             context.Users.AddRange(user1, user2);
-            context.Books.AddRange(book1, book2, book3, book4);
 
             context.SaveChanges();
 

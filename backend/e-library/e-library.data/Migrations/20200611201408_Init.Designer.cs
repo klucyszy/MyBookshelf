@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Elibrary.Data.Migrations
 {
     [DbContext(typeof(ELibraryContext))]
-    [Migration("20200326192043_SeedFavBooks")]
-    partial class SeedFavBooks
+    [Migration("20200611201408_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,6 @@ namespace Elibrary.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Author")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Category")
@@ -42,11 +41,9 @@ namespace Elibrary.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ISBN")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -57,39 +54,7 @@ namespace Elibrary.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Author = "David Allen",
-                            Category = 7,
-                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "admin",
-                            ISBN = "ISBN-1",
-                            Title = "Gettings Things Done"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Author = "Charles Duhigg",
-                            Category = 7,
-                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "admin",
-                            ISBN = "ISBN-2",
-                            Title = "Siła Nawyku"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Author = "Daniel Kahneman",
-                            Category = 7,
-                            CreateDate = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "admin",
-                            ISBN = "ISBN-3",
-                            Title = "Pułapki Myślenia"
-                        });
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.BookOnLoan", b =>
@@ -135,7 +100,26 @@ namespace Elibrary.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BooksOnLoan");
+                    b.ToTable("BookOnLoan");
+                });
+
+            modelBuilder.Entity("Elibrary.Domain.Entities.Bookshelf", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BookshelfId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FavoriteBookshelves");
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.User", b =>
@@ -175,14 +159,6 @@ namespace Elibrary.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2020, 3, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = "admin",
-                            Login = "testUser",
-                            UserIdentifier = "testId"
-                        },
-                        new
-                        {
-                            Id = 2,
                             CreateDate = new DateTime(2020, 3, 25, 12, 12, 12, 0, DateTimeKind.Unspecified),
                             CreatedBy = "admin",
                             Login = "klucyszyn1995@gmail.com",
@@ -201,8 +177,7 @@ namespace Elibrary.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(512)")
-                        .HasMaxLength(512);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -228,25 +203,7 @@ namespace Elibrary.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserFavoriteBooks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BookId = 1,
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Rate = 8,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BookId = 2,
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Rate = 9,
-                            UserId = 2
-                        });
+                    b.ToTable("UserFavoriteBook");
                 });
 
             modelBuilder.Entity("Elibrary.Domain.Entities.BookOnLoan", b =>

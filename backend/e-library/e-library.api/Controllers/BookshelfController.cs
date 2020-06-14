@@ -1,6 +1,9 @@
-﻿using Elibrary.Application.BookshelfsArea.Queries.GetBookshelf;
+﻿using Elibrary.Application.BookshelfsArea.Command.AddFavoriteBookshelf;
+using Elibrary.Application.BookshelfsArea.Command.DeleteFavoriteBookshelf;
+using Elibrary.Application.BookshelfsArea.Queries.GetBookshelf;
 using Elibrary.Application.BookshelfsArea.Queries.GetBookshelfsList;
 using Elibrary.Application.Common.Controllers;
+using Elibrary.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -31,21 +34,36 @@ namespace Elibrary.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<GetBookshelfsApiListModel>> GetUserBookshelfs(GetBookshelfsListQuery.BookshelfsOption option = GetBookshelfsListQuery.BookshelfsOption.All)
         {
-            return await Mediator.Send(new GetBookshelfsListQuery(option));
+            return await Mediator.Send(new GetBookshelfsListQuery(CurrentUser.Id, option));
         }
 
+        /// <summary>
+        /// Add bookshelf to user favorite booshelfs.
+        /// </summary>
+        /// <param name="bookshelfId">BookshelfId (integer).</param>
+        /// <returns>Determines if request was successful.</returns>
         [HttpPost("favorites/{bookshelfId}")]
-        public async Task<ActionResult<GetBookshelfsApiListModel>> AddUserFavoriteBookshelf(string bookshelfId)
+        public async Task<ActionResult<ApiModel>> AddUserFavoriteBookshelf(int bookshelfId)
         {
-            return Ok();
+            return await Mediator.Send(new AddFavoriteBookshelfCommand(CurrentUser.Id, bookshelfId));
         }
 
+        /// <summary>
+        /// Remove bookshelf from user favorite bookshelfs.
+        /// </summary>
+        /// <param name="bookshelfId">BookshelfId (integer).</param>
+        /// <returns>Determines if request was successful.</returns>
         [HttpDelete("favorites/{bookshelfId}")]
-        public async Task<ActionResult<GetBookshelfsApiListModel>> RemoveUserFavoriteBookshelf(string bookshelfId)
+        public async Task<ActionResult<ApiModel>> RemoveUserFavoriteBookshelf(int bookshelfId)
         {
-            return Ok();
+            return await Mediator.Send(new DeleteFavoriteBookshelfCommand(bookshelfId, CurrentUser.Id));
         }
 
+        /// <summary>
+        /// Get bookshelf.
+        /// </summary>
+        /// <param name="bookshelfId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{bookshelfId}")]
         public async Task<ActionResult<GetBookshelfApiModel>> GetBookshelf(string bookshelfId)
